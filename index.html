@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Confusing URL Builder</title>
+  <link rel="icon" href="data:," />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header>
+    <h1>Confusing URL Builder</h1>
+  </header>
+
+  <div id="loadError" class="load-error" style="display:none">
+    Could not load <code>data/*.json</code>. Serve this folder over HTTP instead of opening it as
+    <code>file://</code> (e.g. <code>python3 -m http.server</code>, then
+    <code>http://localhost:8000</code>) — browsers block JSON <code>fetch()</code> from local files.
+  </div>
+
+  <main>
+    <section class="panel form-panel">
+      <h2>Target</h2>
+      <div class="field-grid">
+        <label>Scheme
+          <select id="scheme">
+            <option value="http">http</option>
+            <option value="https">https</option>
+          </select>
+        </label>
+
+        <label>Allowed host
+          <input id="allowedHost" type="text" placeholder="expected.example / 127.0.0.1" value="expected.example" />
+        </label>
+        <label>Allowed port <span class="opt">(optional)</span>
+          <input id="allowedPort" type="text" placeholder="80" />
+        </label>
+
+        <label>Target host
+          <input id="targetHost" type="text" placeholder="evil.example / 10.0.0.5" value="evil.example" />
+        </label>
+        <label>Target port <span class="opt">(optional)</span>
+          <input id="targetPort" type="text" placeholder="8080" />
+        </label>
+
+        <label class="field-wide">Desired path
+          <input id="path" type="text" placeholder="/admin/flag" value="/flag" />
+        </label>
+
+        <label>Requester parser <span class="opt">(the one that actually sends the request)</span>
+          <select id="requester"></select>
+        </label>
+
+        <label>Validator <span class="opt">(the security check being tested)</span>
+          <select id="validator"></select>
+        </label>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Payloads</h2>
+      <p id="summary" class="summary"></p>
+      <div class="table-wrap">
+        <table class="results-table">
+          <thead>
+            <tr>
+              <th>Technique</th>
+              <th>Payload</th>
+              <th>Path fix</th>
+              <th>Validator verdict</th>
+            </tr>
+          </thead>
+          <tbody id="resultsBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Alternate IP encoding</h2>
+      <p class="note">Standalone helper, independent of the matrix — handy for obfuscating a target/allowed IP. Verify manually that the chosen parser accepts the encoding.</p>
+      <label class="field-wide">IPv4 to encode
+        <input id="ipInput" type="text" placeholder="127.0.0.1" />
+      </label>
+      <div id="ipOutput"></div>
+    </section>
+  </main>
+
+  <footer>
+    Highly inspired by PortSwigger's
+    <a href="https://portswigger.net/web-security/ssrf/url-validation-bypass-cheat-sheet" target="_blank" rel="noopener noreferrer">URL validation bypass cheat sheet</a>.
+  </footer>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
