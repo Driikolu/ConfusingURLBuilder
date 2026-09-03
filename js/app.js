@@ -28,7 +28,7 @@ function ecosystemOf(name) {
   if (name === "elixir-uri") return "Elixir";
   if (name === "lua-neturl") return "Lua";
   if (name === "swift-urlcomponents") return "Swift";
-  if (name === "cpp-boost-url" || name === "uriparser-c") return "C / C++";
+  if (name === "cpp-boost-url" || name === "uriparser-c" || name === "glib-guri") return "C / C++";
   if (name === "libcurl" || name === "wget-cli") return "CLI / native";
   return "Other";
 }
