@@ -54,6 +54,21 @@
         <label>Validator <span class="opt">(the security check being tested)</span>
           <select id="validator"></select>
         </label>
+
+        <div id="customRegexBlock" class="field-wide custom-regex-block" style="display:none">
+          <label class="field-wide">Regex pattern <span class="opt">(tested against the full payload string)</span>
+            <input id="customRegexPattern" type="text" placeholder="^https?://(www\.)?allowed\.example" />
+          </label>
+          <div class="custom-regex-row">
+            <label>Flags <span class="opt">(optional)</span>
+              <input id="customRegexFlags" type="text" placeholder="i" />
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" id="customRegexInvert" />
+              Invert — a match means BLOCKED, not bypassed
+            </label>
+          </div>
+        </div>
       </div>
     </section>
 

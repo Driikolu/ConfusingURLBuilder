@@ -83,6 +83,11 @@ function populateParserSelects() {
     opt.title = c.description;
     naiveGroup.appendChild(opt);
   }
+  const customOpt = document.createElement("option");
+  customOpt.value = "custom:regex";
+  customOpt.textContent = "Custom regex…";
+  customOpt.title = "Test your own regex against the full payload string";
+  naiveGroup.appendChild(customOpt);
   els.validator.appendChild(naiveGroup);
 
   for (const eco of sortedEcos) {
@@ -141,6 +146,22 @@ function copyButton(text) {
 // structural position they'd occupy.
 function computeVerdict(technique, level, payload, validatorValue, inputs) {
   const probe = state.matrix.probe;
+
+  if (validatorValue === "custom:regex") {
+    const pattern = els.customRegexPattern.value;
+    if (!pattern) return { status: "error", detail: "enter a regex pattern above" };
+    let re;
+    try {
+      re = new RegExp(pattern, els.customRegexFlags.value.trim());
+    } catch (e) {
+      return { status: "error", detail: `invalid regex: ${e.message}` };
+    }
+    const matches = re.test(payload);
+    const passes = els.customRegexInvert.checked ? !matches : matches;
+    return passes
+      ? { status: "bypass", detail: `${matches ? "matches" : "does not match"} your regex` }
+      : { status: "blocked", detail: `${matches ? "matches" : "does not match"} your regex` };
+  }
 
   if (validatorValue.startsWith("naive:")) {
     const check = getCheck(validatorValue.slice(6));
@@ -352,6 +373,10 @@ async function init() {
   els.allPayloads = $("allPayloads");
   els.allPayloadsCount = $("allPayloadsCount");
   els.copyAllBtn = $("copyAllBtn");
+  els.customRegexBlock = $("customRegexBlock");
+  els.customRegexPattern = $("customRegexPattern");
+  els.customRegexFlags = $("customRegexFlags");
+  els.customRegexInvert = $("customRegexInvert");
 
   try {
     await loadData();
@@ -371,6 +396,13 @@ async function init() {
     el.addEventListener("input", rerender);
     el.addEventListener("change", rerender);
   }
+  for (const el of [els.customRegexPattern, els.customRegexFlags, els.customRegexInvert]) {
+    el.addEventListener("input", render);
+    el.addEventListener("change", render);
+  }
+  els.validator.addEventListener("change", () => {
+    els.customRegexBlock.style.display = els.validator.value === "custom:regex" ? "flex" : "none";
+  });
   els.ipInput.addEventListener("input", renderIpPanel);
   els.copyAllBtn.addEventListener("click", async () => {
     try {

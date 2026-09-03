@@ -113,6 +113,35 @@ label {
 
 .opt { font-weight: normal; opacity: 0.7; }
 
+.custom-regex-block {
+  margin-top: 0.9rem;
+  padding: 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.custom-regex-row {
+  display: flex;
+  align-items: end;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+}
+
+.checkbox-label {
+  flex-direction: row !important;
+  align-items: center;
+  gap: 0.4rem !important;
+  white-space: nowrap;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: auto;
+}
+
 input, select {
   background: var(--bg);
   color: var(--text);
