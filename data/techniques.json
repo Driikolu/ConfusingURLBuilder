@@ -12,7 +12,9 @@
     "LF": "literal line feed (U+000A)",
     "VT": "literal vertical tab character (U+000B)",
     "FF": "literal form feed character (U+000C)",
-    "FWAT": "fullwidth commercial at, U+FF20 (unicode look-alike of @)"
+    "FWAT": "fullwidth commercial at, U+FF20 (unicode look-alike of @)",
+    "AFW": "allowed host with every ASCII char mapped to its Unicode fullwidth form (e.g. 'e' -> 'ｅ')",
+    "TFW": "target host with every ASCII char mapped to its Unicode fullwidth form"
   },
   "techniques": [
     {
@@ -945,6 +947,62 @@
       "family": "ipv6-bracket",
       "description": "Allowed host wrapped in [] (IPv6-literal syntax) twice before the real @-delimited target. Inspired by the cheat sheet's '[::1]@[::1]@ATTACKERHOSTNAME' entry.",
       "template": "{S}://[{A}{AP}]@[{A}{AP}]@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "fullwidth-target-userinfo",
+      "name": "Fullwidth-encoded target host",
+      "family": "unicode",
+      "description": "The target host is spelled entirely with Unicode fullwidth characters (e.g. 'evil.example' -> 'ｅｖｉｌ．ｅｘａｍｐｌｅ'). Several parsers apply Unicode/IDNA host mapping that silently folds fullwidth forms back to plain ASCII, so they still connect to the target - while looking nothing like it to a naive string check.",
+      "template": "{S}://{A}{AP}@{TFW}{TP}/{C}{P}"
+    },
+    {
+      "id": "fullwidth-target-fragment-hide",
+      "name": "Fullwidth target host, allowed hidden in fragment",
+      "family": "unicode",
+      "description": "Combines the fullwidth-host trick with hiding the allowed host in the fragment: the real host is the fullwidth-spelled target (normalized back to ASCII by IDNA-aware parsers), and the allowed domain only appears after '#' to fool a naive contains() check.",
+      "template": "{S}://{TFW}{TP}/{C}{P}#{A}{AP}"
+    },
+    {
+      "id": "ipv6-zoneid-decoy",
+      "name": "IPv6 zone-ID as userinfo decoy",
+      "family": "ipv6-bracket",
+      "description": "The allowed host is smuggled inside an IPv6 zone identifier (the '%25' + text after an IPv6 literal, e.g. link-local scope id) used as userinfo, before the real @-delimited target. Tests whether a parser's IPv6-literal-with-zone-id grammar is lenient enough to just skip over the whole bracketed mess.",
+      "template": "{S}://[fe80::1%25{A}{AP}]@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "at-backslash-at-allowed-first",
+      "name": "Real @ then backslash-@ (allowed first)",
+      "family": "backslash",
+      "description": "Allowed host, a real @, then a backslash immediately followed by another @, then target. Refines the plain backslash-@ trick: works only for parsers that don't lock in the first real @ as decisive even when a later backslash+@ sequence follows.",
+      "template": "{S}://{A}{AP}@\\@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "nbsp-before-at",
+      "name": "Non-breaking space before @",
+      "family": "whitespace",
+      "description": "A non-breaking space (U+00A0) inserted before the @. Outside the ASCII C0 control range already swept elsewhere - tests a different 'is this whitespace' code path than tab/CR/LF.",
+      "template": "{S}://{A}{AP} @{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "zwsp-before-at",
+      "name": "Zero-width space before @",
+      "family": "whitespace",
+      "description": "A zero-width space (U+200B, a formatting character with no visual width) inserted before the @ - invisible when the payload is displayed or logged.",
+      "template": "{S}://{A}{AP}​@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "scheme-colon-tab",
+      "name": "Tab between scheme and colon, allowed in fragment",
+      "family": "scheme-slashes",
+      "description": "A tab character between the scheme name and its colon (e.g. 'http\\t://'), combined with hiding the allowed host in the fragment. Tests whitespace tolerance at the scheme/colon boundary specifically, not just inside the authority.",
+      "template": "{S}{TAB}://{T}{TP}/{C}{P}#{A}{AP}"
+    },
+    {
+      "id": "scheme-colon-space",
+      "name": "Space between scheme and colon, allowed in fragment",
+      "family": "scheme-slashes",
+      "description": "Same idea as scheme-colon-tab but with a plain space.",
+      "template": "{S} ://{T}{TP}/{C}{P}#{A}{AP}"
     }
   ]
 }

@@ -7,6 +7,14 @@ export function portSuffix(port) {
   return p ? `:${p}` : "";
 }
 
+// Maps ASCII 0x21-0x7E to the Unicode "Halfwidth and Fullwidth Forms" block
+// (fixed +0xFEE0 offset) - covers letters, digits, '.', '-' alike, so it
+// works on both domain names and dotted IPv4 literals. Several parsers apply
+// Unicode/IDNA host mapping that folds these back to plain ASCII.
+export function toFullwidth(str) {
+  return (str || "").replace(/[\x21-\x7e]/g, (c) => String.fromCodePoint(c.codePointAt(0) + 0xfee0));
+}
+
 export function renderTemplate(template, vars) {
   return template
     .replaceAll("{S}", vars.scheme)
@@ -14,6 +22,8 @@ export function renderTemplate(template, vars) {
     .replaceAll("{AP}", portSuffix(vars.allowedPort))
     .replaceAll("{T}", vars.targetHost)
     .replaceAll("{TP}", portSuffix(vars.targetPort))
+    .replaceAll("{AFW}", toFullwidth(vars.allowedHost))
+    .replaceAll("{TFW}", toFullwidth(vars.targetHost))
     .replaceAll("{P}", (vars.path || "/").replace(/^\/+/, ""))
     .replaceAll("{C}", "../".repeat(vars.correctionLevel || 0))
     .replaceAll("{TAB}", "\t")

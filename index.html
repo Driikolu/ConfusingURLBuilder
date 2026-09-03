@@ -58,6 +58,20 @@
     </section>
 
     <section class="panel">
+      <h2>All crafted payloads</h2>
+      <p class="note">
+        Every known technique, unfiltered — no requester/validator needed. Useful for blind
+        fuzzing when you don't know the target's tech stack. Includes payloads that don't work
+        against any parser we've tested.
+      </p>
+      <div class="all-payloads-row">
+        <button id="copyAllBtn" type="button" class="copy-btn">Copy all</button>
+        <span id="allPayloadsCount" class="summary"></span>
+      </div>
+      <textarea id="allPayloads" class="all-payloads-textarea" readonly spellcheck="false"></textarea>
+    </section>
+
+    <section class="panel">
       <h2>Payloads</h2>
       <p id="summary" class="summary"></p>
       <div class="table-wrap">

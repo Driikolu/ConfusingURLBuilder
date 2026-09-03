@@ -42,8 +42,8 @@ function $(id) {
 
 async function loadData() {
   const [techRes, matrixRes] = await Promise.all([
-    fetch("data/techniques.json"),
-    fetch("data/technique-matrix.json"),
+    fetch("data/techniques.json", { cache: "no-store" }),
+    fetch("data/technique-matrix.json", { cache: "no-store" }),
   ]);
   if (!techRes.ok || !matrixRes.ok) throw new Error("fetch failed");
   state.techniques = (await techRes.json()).techniques;
@@ -238,6 +238,43 @@ function renderRow(row) {
   return tr;
 }
 
+// One payload per technique per *distinct* path-correction level seen for
+// any of the 32 parsers (plus level 0 as a baseline for techniques with no
+// supported parser at all) - unfiltered by bypass/verdict status. Meant for
+// blind fuzzing when the target's tech stack isn't known.
+function buildAllPayloads(inputs) {
+  const lines = [];
+  for (const t of state.techniques) {
+    const levels = new Set([0]);
+    const perParser = state.matrix.results[t.id] || {};
+    for (const entry of Object.values(perParser)) {
+      if (entry.supported) levels.add(entry.bestLevel);
+    }
+    for (const level of [...levels].sort((a, b) => a - b)) {
+      lines.push(buildPayload(t, level, inputs));
+    }
+  }
+  return lines;
+}
+
+function renderAllPayloadsPanel() {
+  const inputs = currentInputs();
+  if (!inputs.allowedHost || !inputs.targetHost) {
+    els.allPayloads.value = "";
+    els.allPayloadsCount.textContent = "Enter an allowed host and a target host above.";
+    return;
+  }
+  const lines = buildAllPayloads(inputs);
+  els.allPayloads.value = lines.join("\n");
+  const withEmbeddedNewline = lines.filter((l) => /[\r\n]/.test(l)).length;
+  els.allPayloadsCount.textContent =
+    `${lines.length} payloads from all ${state.techniques.length} known techniques - ` +
+    `includes ones that don't work for any tested parser. Unfiltered, no requester/validator needed.` +
+    (withEmbeddedNewline
+      ? ` Note: ${withEmbeddedNewline} of them contain a literal CR/LF and will visually span extra lines below.`
+      : "");
+}
+
 function render() {
   const inputs = currentInputs();
   if (!inputs.allowedHost || !inputs.targetHost) {
@@ -312,6 +349,9 @@ async function init() {
   els.ipInput = $("ipInput");
   els.ipOutput = $("ipOutput");
   els.loadError = $("loadError");
+  els.allPayloads = $("allPayloads");
+  els.allPayloadsCount = $("allPayloadsCount");
+  els.copyAllBtn = $("copyAllBtn");
 
   try {
     await loadData();
@@ -323,13 +363,27 @@ async function init() {
 
   populateParserSelects();
 
+  const rerender = () => {
+    render();
+    renderAllPayloadsPanel();
+  };
   for (const el of [els.scheme, els.allowedHost, els.allowedPort, els.targetHost, els.targetPort, els.path, els.requester, els.validator]) {
-    el.addEventListener("input", render);
-    el.addEventListener("change", render);
+    el.addEventListener("input", rerender);
+    el.addEventListener("change", rerender);
   }
   els.ipInput.addEventListener("input", renderIpPanel);
+  els.copyAllBtn.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(els.allPayloads.value);
+    } catch {
+      els.allPayloads.select();
+      document.execCommand("copy");
+    }
+    els.copyAllBtn.textContent = "Copied!";
+    setTimeout(() => (els.copyAllBtn.textContent = "Copy all"), 1200);
+  });
 
-  render();
+  rerender();
 }
 
 init();

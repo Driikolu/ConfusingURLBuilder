@@ -142,6 +142,31 @@ input:focus, select:focus {
   margin: 0 0 1rem;
 }
 
+.all-payloads-row {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 0.6rem;
+}
+
+.all-payloads-row .summary {
+  margin: 0;
+}
+
+.all-payloads-textarea {
+  width: 100%;
+  min-height: 160px;
+  resize: vertical;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.7rem 0.8rem;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  line-height: 1.6;
+}
+
 .table-wrap {
   overflow-x: auto;
   border: 1px solid var(--border);
