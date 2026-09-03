@@ -31,7 +31,8 @@ export function renderTemplate(template, vars) {
     .replaceAll("{LF}", "\n")
     .replaceAll("{VT}", "\v")
     .replaceAll("{FF}", "\f")
-    .replaceAll("{FWAT}", "＠");
+    .replaceAll("{FWAT}", "＠")
+    .replaceAll("{FWBS}", "＼");
 }
 
 export function buildPayload(technique, correctionLevel, inputs) {

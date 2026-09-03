@@ -14,7 +14,8 @@
     "FF": "literal form feed character (U+000C)",
     "FWAT": "fullwidth commercial at, U+FF20 (unicode look-alike of @)",
     "AFW": "allowed host with every ASCII char mapped to its Unicode fullwidth form (e.g. 'e' -> 'ｅ')",
-    "TFW": "target host with every ASCII char mapped to its Unicode fullwidth form"
+    "TFW": "target host with every ASCII char mapped to its Unicode fullwidth form",
+    "FWBS": "fullwidth reverse solidus, U+FF3C (unicode look-alike of backslash)"
   },
   "techniques": [
     {
@@ -1003,6 +1004,20 @@
       "family": "scheme-slashes",
       "description": "Same idea as scheme-colon-tab but with a plain space.",
       "template": "{S} ://{T}{TP}/{C}{P}#{A}{AP}"
+    },
+    {
+      "id": "semicolon-before-at",
+      "name": "Semicolon before @",
+      "family": "userinfo",
+      "description": "A semicolon inserted right before the @ - an old RFC 2396 path/userinfo parameter delimiter that no longer means anything special in modern URL grammars. Reaches the target on every parser tested, since it's simply extra literal userinfo content before a normal @, but it reliably breaks naive contains()/startsWith() checks that don't expect a ';' there.",
+      "template": "{S}://{A}{AP};@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "fullwidth-backslash-at",
+      "name": "Fullwidth backslash before @",
+      "family": "unicode",
+      "description": "The fullwidth reverse solidus look-alike (U+FF3C) used instead of a real backslash, right before the @. Extends the backslash family into Unicode look-alike territory.",
+      "template": "{S}://{A}{AP}{FWBS}@{T}{TP}/{C}{P}"
     }
   ]
 }
