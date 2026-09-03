@@ -1018,6 +1018,69 @@
       "family": "unicode",
       "description": "The fullwidth reverse solidus look-alike (U+FF3C) used instead of a real backslash, right before the @. Extends the backslash family into Unicode look-alike territory.",
       "template": "{S}://{A}{AP}{FWBS}@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "mid-at-tab-at",
+      "name": "Tab between two real @",
+      "family": "userinfo",
+      "description": "Allowed, a real @, a tab, another real @, then target. Tests whether a parser's 'last @ wins' rule survives a tab sitting between two genuine @ signs.",
+      "template": "{S}://{A}{AP}@{TAB}@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "mid-at-cr-at",
+      "name": "CR between two real @",
+      "family": "userinfo",
+      "description": "Same idea as mid-at-tab-at but with a carriage return between the two @ signs.",
+      "template": "{S}://{A}{AP}@{CR}@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "mid-at-lf-at",
+      "name": "LF between two real @",
+      "family": "userinfo",
+      "description": "Same idea as mid-at-tab-at but with a line feed between the two @ signs.",
+      "template": "{S}://{A}{AP}@{LF}@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "mid-at-space-at",
+      "name": "Space between two real @",
+      "family": "userinfo",
+      "description": "Same idea as mid-at-tab-at but with a plain space between the two @ signs.",
+      "template": "{S}://{A}{AP}@ @{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "mid-at-semicolon-at",
+      "name": "Semicolon between two real @",
+      "family": "userinfo",
+      "description": "Same idea as mid-at-tab-at but with a semicolon between the two @ signs.",
+      "template": "{S}://{A}{AP}@;@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "mid-at-percent00-at",
+      "name": "Percent-encoded NUL between two real @",
+      "family": "userinfo",
+      "description": "Same idea as mid-at-tab-at but with a percent-encoded NUL byte between the two @ signs.",
+      "template": "{S}://{A}{AP}@%00@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "mid-at-fullwidth-at-at",
+      "name": "Fullwidth @ between two real @",
+      "family": "unicode",
+      "description": "Allowed, a real @, a fullwidth @ (U+FF20, inert to most parsers), another real @, then target. Notably rejected outright by python-urllib/python-furl/python-yarl with an NFKC-normalization safety check, while python-urllib3 and most others process it and reach the target - a real hardening gap between otherwise-related libraries.",
+      "template": "{S}://{A}{AP}@＠@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "sandwich-plus-backslash",
+      "name": "Allowed sandwich then backslash-@",
+      "family": "backslash",
+      "description": "Allowed, @, allowed again, then backslash-@, then target - combines the double-allowed sandwich with a trailing backslash-@ trick. Same parser support set as the simpler backslash-after-real-@ variants, offered as a distinct payload string for wordlist diversity.",
+      "template": "{S}://{A}{AP}@{A}{AP}\\@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "double-backslash-mid-at",
+      "name": "Double backslash between two real @",
+      "family": "backslash",
+      "description": "Allowed, a real @, two backslashes, another real @, then target.",
+      "template": "{S}://{A}{AP}@\\\\@{T}{TP}/{C}{P}"
     }
   ]
 }
