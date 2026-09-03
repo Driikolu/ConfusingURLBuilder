@@ -1081,6 +1081,216 @@
       "family": "backslash",
       "description": "Allowed, a real @, two backslashes, another real @, then target.",
       "template": "{S}://{A}{AP}@\\\\@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "trailing-dot-allowed-at",
+      "name": "Trailing dot on allowed before @",
+      "family": "userinfo",
+      "description": "A trailing dot right after the allowed host, before the @. Reaches the target on all 32 parsers tested - the dot is just extra literal userinfo content - but reliably breaks naive checks anchored on the exact allowed string.",
+      "template": "{S}://{A}{AP}.@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "userinfo-double-colon",
+      "name": "Double colon in userinfo",
+      "family": "userinfo",
+      "description": "Two consecutive colons after the allowed host, before the @ (an empty 'password' field written twice). Works on 31/32 parsers.",
+      "template": "{S}://{A}{AP}::@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "fullwidth-colon-port-decoy",
+      "name": "Fullwidth colon port decoy",
+      "family": "unicode",
+      "description": "The allowed host followed by a fullwidth colon (U+FF1A) and the target, as if target were an invalid port written with a look-alike colon, before the real @ that terminates the userinfo.",
+      "template": "{S}://{A}{AP}：{T}{TP}@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "leading-tab-authority",
+      "name": "Tab right after the scheme slashes",
+      "family": "whitespace",
+      "description": "A tab inserted right after '://' and before the userinfo/host - a different position than 'tab before @', testing whitespace tolerance at the very start of the authority.",
+      "template": "{S}://{TAB}{A}{AP}@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "triple-at-plain",
+      "name": "Triple @ decoy chain",
+      "family": "userinfo",
+      "description": "The allowed host repeated three times, each separated by @, before the real target. Same parser support as a bare empty double-@ (bare-double-at) - confirms the mechanism only cares about 'last @ wins', not how many decoy segments precede it.",
+      "template": "{S}://{A}{AP}@{A}{AP}@{A}{AP}@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "bare-double-at",
+      "name": "Bare empty double @",
+      "family": "userinfo",
+      "description": "Allowed, then two consecutive @ with nothing between them (empty userinfo segment), then target.",
+      "template": "{S}://{A}{AP}@@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "stray-close-bracket",
+      "name": "Stray closing bracket after target",
+      "family": "ipv6-bracket",
+      "description": "An unmatched ']' right after the target host, with no opening bracket anywhere. Extremely narrow: only elixir-uri tolerates it and still reaches the target - every other parser tested rejects or mis-parses it.",
+      "template": "{S}://{A}{AP}@{T}{TP}]/{C}{P}"
+    },
+    {
+      "id": "trailing-tab-before-path",
+      "name": "Tab right after target, before path",
+      "family": "whitespace",
+      "description": "A tab inserted right after the target host and before the path-starting slash - a different position than tabs tested elsewhere (before/between @ signs).",
+      "template": "{S}://{A}{AP}@{T}{TP}\t/{C}{P}"
+    },
+    {
+      "id": "user-colon-allowed-at",
+      "name": "Literal 'user:' prefix decoy",
+      "family": "userinfo",
+      "description": "A literal 'user:' prefix followed by the allowed host as a fake password, then @, then target. Reaches the target on all 32 parsers tested.",
+      "template": "{S}://user:{A}{AP}@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "word-joiner-before-at",
+      "name": "Word joiner before @",
+      "family": "unicode",
+      "description": "A word joiner (U+2060, a zero-width formatting character) inserted before the @ - a different invisible-character family than the zero-width space tested elsewhere.",
+      "template": "{S}://{A}{AP}⁠@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "zwj-before-at",
+      "name": "Zero-width joiner before @",
+      "family": "unicode",
+      "description": "A zero-width joiner (U+200D) inserted before the @. Same support set as word-joiner-before-at.",
+      "template": "{S}://{A}{AP}‍@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "mid-at-vtab-at",
+      "name": "Vertical tab between two real @",
+      "family": "userinfo",
+      "description": "Allowed, a real @, a vertical tab, another real @, then target - extends the 'X between two @' sweep.",
+      "template": "{S}://{A}{AP}@\u000b@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "mid-at-formfeed-at",
+      "name": "Form feed between two real @",
+      "family": "userinfo",
+      "description": "Same idea as mid-at-vtab-at but with a form feed. Identical support set.",
+      "template": "{S}://{A}{AP}@\f@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "zoneid-plus-backslash",
+      "name": "IPv6 zone-ID decoy plus backslash",
+      "family": "ipv6-bracket",
+      "description": "Combines the IPv6 zone-ID userinfo decoy with a trailing backslash before the real @ - a distinct parser subset from either trick alone.",
+      "template": "{S}://[fe80::1%25{A}{AP}]\\@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "backslash-before-sandwich",
+      "name": "Backslash before allowed sandwich",
+      "family": "backslash",
+      "description": "A backslash right after the first allowed host, before the first @, then allowed again, then the real @, then target.",
+      "template": "{S}://{A}{AP}\\@{A}{AP}@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "stray-open-bracket",
+      "name": "Stray opening bracket before @",
+      "family": "ipv6-bracket",
+      "description": "An unmatched '[' right after the real @, with no closing bracket anywhere. Like stray-close-bracket, only elixir-uri tolerates it - a consistent pattern of unusually permissive bracket handling in that parser.",
+      "template": "{S}://{A}{AP}@[{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "lf-inside-scheme",
+      "name": "Line feed inside the scheme word",
+      "family": "scheme-slashes",
+      "description": "A line feed inserted inside the literal word 'http' itself (hardcoded to the http scheme), before the '://'.",
+      "template": "ht\np://{A}{AP}@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "reverse-mixed-slashes",
+      "name": "Backslash then forward slash after scheme",
+      "family": "scheme-slashes",
+      "description": "Backslash then forward slash before the authority (the reverse order of the existing forward-then-backslash variant) - a distinct, WHATWG-family-leaning parser subset.",
+      "template": "{S}:\\/{A}{AP}@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "many-slashes-after-scheme",
+      "name": "Six slashes before authority",
+      "family": "scheme-slashes",
+      "description": "Six slashes instead of two right after the scheme colon - even narrower support than the triple-slash variant.",
+      "template": "{S}://////{A}{AP}@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "backslash-before-scheme",
+      "name": "Backslash before the whole URL",
+      "family": "scheme-slashes",
+      "description": "A stray backslash right before the scheme itself, at the very start of the string. Only android-uri tolerates it - the first of several 'garbage before the scheme' quirks unique to that parser.",
+      "template": "\\{S}://{A}{AP}@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "ipvfuture-bracket-allowed",
+      "name": "IPvFuture bracket syntax with allowed",
+      "family": "ipv6-bracket",
+      "description": "The allowed host wrapped in RFC 3986's IPvFuture bracket syntax ('[vHEX.address]', reserved for future IP versions) as userinfo decoy, before the real @ and target. A broad, previously-untested bracket mechanism distinct from plain IPv6-literal brackets.",
+      "template": "{S}://[v1.{A}{AP}]@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "open-bracket-authority-start",
+      "name": "Open bracket at authority start",
+      "family": "ipv6-bracket",
+      "description": "A stray, never-closed '[' right at the start of the authority (before the allowed host), then the normal userinfo-@ trick.",
+      "template": "{S}://[{A}{AP}@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "mid-at-wordjoiner-at",
+      "name": "Word joiner between two real @",
+      "family": "unicode",
+      "description": "Allowed, a real @, a word joiner (U+2060), another real @, then target - the 'between two @' slot filled with an invisible formatting character.",
+      "template": "{S}://{A}{AP}@⁠@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "mid-at-zwj-at",
+      "name": "Zero-width joiner between two real @",
+      "family": "unicode",
+      "description": "Same idea as mid-at-wordjoiner-at but with a zero-width joiner (U+200D).",
+      "template": "{S}://{A}{AP}@‍@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "space-before-scheme",
+      "name": "Space before the whole URL",
+      "family": "scheme-slashes",
+      "description": "A leading space before the scheme itself, at the very start of the string.",
+      "template": " {S}://{A}{AP}@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "double-stray-close-bracket",
+      "name": "Double stray closing bracket",
+      "family": "ipv6-bracket",
+      "description": "Two unmatched ']' right after the target host. Like the single-bracket variant, only elixir-uri tolerates it - a third confirmation of that parser's unusually permissive bracket handling.",
+      "template": "{S}://{A}{AP}@{T}{TP}]]/{C}{P}"
+    },
+    {
+      "id": "dot-before-scheme",
+      "name": "Dot before the whole URL",
+      "family": "scheme-slashes",
+      "description": "A leading dot before the scheme itself, at the very start of the string.",
+      "template": ".{S}://{A}{AP}@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "bom-prefix",
+      "name": "Unicode BOM prefix",
+      "family": "unicode",
+      "description": "A UTF-8 byte-order-mark character prepended to the entire URL, before the scheme.",
+      "template": "﻿{S}://{A}{AP}@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "double-backslash-before-scheme",
+      "name": "Double backslash before the whole URL",
+      "family": "scheme-slashes",
+      "description": "Two stray backslashes right before the scheme itself. Only android-uri tolerates it - same narrow parser as the single-backslash and leading-slash variants, a consistent 'garbage before scheme' leniency unique to that parser.",
+      "template": "\\\\{S}://{A}{AP}@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "slash-before-scheme",
+      "name": "Slash before the whole URL",
+      "family": "scheme-slashes",
+      "description": "A stray forward slash right before the scheme itself. Only android-uri tolerates it.",
+      "template": "/{S}://{A}{AP}@{T}{TP}/{C}{P}"
     }
   ]
 }
