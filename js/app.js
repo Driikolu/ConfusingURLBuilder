@@ -18,7 +18,7 @@ function ecosystemOf(name) {
   if (name.startsWith("python-")) return "Python";
   if (name.startsWith("node-") || name.startsWith("bun-")) return "JavaScript / TypeScript";
   if (name.startsWith("go-")) return "Go";
-  if (["java-uri", "java-url", "okhttp-httpurl", "spring-uricomponents", "apache-httpclient-uri", "android-uri"].includes(name))
+  if (["java-uri", "java-url", "okhttp-httpurl", "spring-uricomponents", "apache-httpclient-uri", "android-uri", "ktor-url"].includes(name))
     return "JVM / Android";
   if (name.startsWith("php-")) return "PHP";
   if (name.startsWith("ruby-")) return "Ruby";
@@ -30,6 +30,7 @@ function ecosystemOf(name) {
   if (name === "swift-urlcomponents") return "Swift";
   if (name === "cpp-boost-url" || name === "uriparser-c" || name === "glib-guri") return "C / C++";
   if (name === "libcurl" || name === "wget-cli") return "CLI / native";
+  if (name === "zig-uri") return "Zig";
   return "Other";
 }
 
