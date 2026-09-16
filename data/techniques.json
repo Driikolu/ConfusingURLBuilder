@@ -1291,6 +1291,55 @@
       "family": "scheme-slashes",
       "description": "A stray forward slash right before the scheme itself. Only android-uri tolerates it.",
       "template": "/{S}://{A}{AP}@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "leading-zero-port-on-target",
+      "name": "Zero-padded port on target",
+      "family": "userinfo",
+      "description": "The real target host followed by a heavily zero-padded port. Reaches the target on 35/37 parsers - mild but nearly universal port-parsing leniency.",
+      "template": "{S}://{A}{AP}@{T}{TP}:000080/{C}{P}"
+    },
+    {
+      "id": "empty-colon-port-on-target",
+      "name": "Empty port on target",
+      "family": "userinfo",
+      "description": "The real target host followed by a bare trailing colon with no port digits at all.",
+      "template": "{S}://{A}{AP}@{T}{TP}:/{C}{P}"
+    },
+    {
+      "id": "plus-sign-port-on-target",
+      "name": "Plus-sign port on target",
+      "family": "userinfo",
+      "description": "The real target host followed by a port written with a leading '+' sign - not valid per any port grammar, but tolerated by a meaningful subset of parsers.",
+      "template": "{S}://{A}{AP}@{T}{TP}:+80/{C}{P}"
+    },
+    {
+      "id": "malformed-port-on-target-letter",
+      "name": "Alphanumeric malformed port on target",
+      "family": "userinfo",
+      "description": "The real target host followed by a port containing a letter ('8a'). Go's net/url validates the port strictly and rejects the whole URL if it isn't pure digits (confirmed absent here); a handful of other parsers are more lenient and still resolve the clean target host.",
+      "template": "{S}://{A}{AP}@{T}{TP}:8a/{C}{P}"
+    },
+    {
+      "id": "malformed-port-on-target",
+      "name": "Non-numeric malformed port on target",
+      "family": "userinfo",
+      "description": "The real target host followed by a completely non-numeric 'port'. Extremely narrow: only python-urllib, elixir-uri and rust-http-uri tolerate it and still reach the target - everyone else (including go-neturl, whose strict port grammar was the inspiration for this whole family) rejects the URL outright.",
+      "template": "{S}://{A}{AP}@{T}{TP}:notanumber/{C}{P}"
+    },
+    {
+      "id": "space-in-port-on-target",
+      "name": "Space inside port on target",
+      "family": "userinfo",
+      "description": "The real target host followed by a port containing an embedded space.",
+      "template": "{S}://{A}{AP}@{T}{TP}:8 0/{C}{P}"
+    },
+    {
+      "id": "double-colon-port-on-target",
+      "name": "Double colon before port on target",
+      "family": "userinfo",
+      "description": "The real target host followed by two consecutive colons before the port digits. The narrowest of this family: only python-urllib and elixir-uri tolerate it.",
+      "template": "{S}://{A}{AP}@{T}{TP}::80/{C}{P}"
     }
   ]
 }
