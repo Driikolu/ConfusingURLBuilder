@@ -1340,6 +1340,27 @@
       "family": "userinfo",
       "description": "The real target host followed by two consecutive colons before the port digits. The narrowest of this family: only python-urllib and elixir-uri tolerate it.",
       "template": "{S}://{A}{AP}@{T}{TP}::80/{C}{P}"
+    },
+    {
+      "id": "zero-slash-fragment-hide",
+      "name": "Zero scheme slashes, direct target, allowed in fragment",
+      "family": "scheme-slashes",
+      "description": "No slashes at all after the scheme colon ('http:target' instead of 'http://target') combined with hiding the allowed host in the fragment. OkHttp's parser treats a standalone URL (no base) as having an authority regardless of slash count, unlike Go's net/url which treats a slashless remainder as an opaque URI with no host at all.",
+      "template": "{S}:{T}{TP}/{C}{P}#{A}{AP}"
+    },
+    {
+      "id": "zero-slash-query-hide",
+      "name": "Zero scheme slashes, direct target, allowed in query",
+      "family": "scheme-slashes",
+      "description": "Same idea as zero-slash-fragment-hide but hiding the allowed host in the query string instead.",
+      "template": "{S}:{T}{TP}/{C}{P}?{A}{AP}"
+    },
+    {
+      "id": "one-slash-clean-fragment",
+      "name": "Single clean scheme slash, direct target, allowed in fragment",
+      "family": "scheme-slashes",
+      "description": "A single forward slash after the scheme colon (no backslash mixed in, unlike the existing missing-slash-single technique), combined with hiding the allowed host in the fragment.",
+      "template": "{S}:/{T}{TP}/{C}{P}#{A}{AP}"
     }
   ]
 }
