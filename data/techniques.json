@@ -1375,6 +1375,34 @@
       "family": "userinfo",
       "description": "The real target host followed by two consecutive ':digits' segments. Same narrow support set as double-colon-port-on-target (python-urllib, elixir-uri) via a differently-shaped payload.",
       "template": "{S}://{A}{AP}@{T}{TP}:80:90/{C}{P}"
+    },
+    {
+      "id": "digit-prefixed-scheme",
+      "name": "Digit fused to scheme name",
+      "family": "scheme-slashes",
+      "description": "A digit glued directly onto the front of the scheme name ('9http' instead of 'http'), combined with hiding the allowed host in the fragment. Found by reading Werkzeug's scheme regex (^[a-zA-Z0-9+-.]+$), which - unlike RFC 3986 - allows digits, '+', '-' and '.' as the very first scheme character. Works on a genuinely broad, mixed cluster (11/43): node-legacy, php-parseurl, python-yarl, spring-uricomponents, lua-neturl, rust-http-uri, android-uri, go-fasthttp, zig-uri, python-werkzeug, jetty-httpuri.",
+      "template": "9{S}://{T}{TP}/{C}{P}#{A}{AP}"
+    },
+    {
+      "id": "plus-prefixed-scheme",
+      "name": "Plus sign fused to scheme name",
+      "family": "scheme-slashes",
+      "description": "Same idea as digit-prefixed-scheme but with a leading '+' fused to the scheme name.",
+      "template": "+{S}://{T}{TP}/{C}{P}#{A}{AP}"
+    },
+    {
+      "id": "hyphen-fused-scheme",
+      "name": "Hyphen fused to scheme name",
+      "family": "scheme-slashes",
+      "description": "Same idea as digit-prefixed-scheme but with a leading '-' fused to the scheme name.",
+      "template": "-{S}://{T}{TP}/{C}{P}#{A}{AP}"
+    },
+    {
+      "id": "dot-fused-scheme",
+      "name": "Dot fused to scheme name",
+      "family": "scheme-slashes",
+      "description": "Same idea as digit-prefixed-scheme but with a leading '.' fused to the scheme name. Slightly narrower than the others (9/43) - notably jetty-httpuri tolerates the other three prefixes but not this one.",
+      "template": ".{S}://{T}{TP}/{C}{P}#{A}{AP}"
     }
   ]
 }
