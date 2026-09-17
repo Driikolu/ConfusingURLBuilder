@@ -1361,6 +1361,13 @@
       "family": "scheme-slashes",
       "description": "A single forward slash after the scheme colon (no backslash mixed in, unlike the existing missing-slash-single technique), combined with hiding the allowed host in the fragment.",
       "template": "{S}:/{T}{TP}/{C}{P}#{A}{AP}"
+    },
+    {
+      "id": "small-reverse-solidus-at",
+      "name": "Small reverse solidus before @",
+      "family": "unicode",
+      "description": "The small form reverse solidus look-alike (U+FE68) inserted before a real @. Unlike a real backslash, it's inert literal content for almost every parser tested (29/37) rather than an authority terminator.",
+      "template": "{S}://{A}{AP}﹨@{T}{TP}/{C}{P}"
     }
   ]
 }

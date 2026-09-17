@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-16T20:39:57.446283+00:00",
+  "generatedAt": "2026-09-17T12:15:58.560644+00:00",
   "probe": {
     "scheme": "http",
     "allowedHost": "expected.example",
@@ -327322,6 +327322,1710 @@
             "ok": true,
             "host": null,
             "path": "/evil.example/../../../../flag",
+            "error": null
+          }
+        ]
+      }
+    },
+    "small-reverse-solidus-at": {
+      "go-neturl": {
+        "supported": false,
+        "bestLevel": null,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example\ufe68@evil.example/flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "parse \"http://expected.example\ufe68@evil.example/flag\": net/url: invalid userinfo"
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example\ufe68@evil.example/../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "parse \"http://expected.example\ufe68@evil.example/../flag\": net/url: invalid userinfo"
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example\ufe68@evil.example/../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "parse \"http://expected.example\ufe68@evil.example/../../flag\": net/url: invalid userinfo"
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example\ufe68@evil.example/../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "parse \"http://expected.example\ufe68@evil.example/../../../flag\": net/url: invalid userinfo"
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example\ufe68@evil.example/../../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "parse \"http://expected.example\ufe68@evil.example/../../../../flag\": net/url: invalid userinfo"
+          }
+        ]
+      },
+      "rust-http-uri": {
+        "supported": false,
+        "bestLevel": null,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example\ufe68@evil.example/flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "invalid uri character"
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example\ufe68@evil.example/../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "invalid uri character"
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example\ufe68@evil.example/../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "invalid uri character"
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example\ufe68@evil.example/../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "invalid uri character"
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example\ufe68@evil.example/../../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "invalid uri character"
+          }
+        ]
+      },
+      "rust-url": {
+        "supported": true,
+        "bestLevel": 0,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example\ufe68@evil.example/flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example\ufe68@evil.example/../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example\ufe68@evil.example/../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example\ufe68@evil.example/../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example\ufe68@evil.example/../../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          }
+        ]
+      },
+      "libcurl": {
+        "supported": true,
+        "bestLevel": 0,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example\ufe68@evil.example/flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example\ufe68@evil.example/../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example\ufe68@evil.example/../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example\ufe68@evil.example/../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example\ufe68@evil.example/../../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          }
+        ]
+      },
+      "uriparser-c": {
+        "supported": false,
+        "bestLevel": null,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example\ufe68@evil.example/flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "syntax error at offset 23 (near '\ufffd')"
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example\ufe68@evil.example/../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "syntax error at offset 23 (near '\ufffd')"
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example\ufe68@evil.example/../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "syntax error at offset 23 (near '\ufffd')"
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example\ufe68@evil.example/../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "syntax error at offset 23 (near '\ufffd')"
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example\ufe68@evil.example/../../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "syntax error at offset 23 (near '\ufffd')"
+          }
+        ]
+      },
+      "cpp-boost-url": {
+        "supported": false,
+        "bestLevel": null,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example\ufe68@evil.example/flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "leftover"
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example\ufe68@evil.example/../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "leftover"
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example\ufe68@evil.example/../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "leftover"
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example\ufe68@evil.example/../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "leftover"
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example\ufe68@evil.example/../../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "leftover"
+          }
+        ]
+      },
+      "java-uri": {
+        "supported": true,
+        "bestLevel": 0,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example\ufe68@evil.example/flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example\ufe68@evil.example/../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../flag",
+            "error": null
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example\ufe68@evil.example/../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../flag",
+            "error": null
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example\ufe68@evil.example/../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../../flag",
+            "error": null
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example\ufe68@evil.example/../../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../../../flag",
+            "error": null
+          }
+        ]
+      },
+      "php-parseurl": {
+        "supported": true,
+        "bestLevel": 0,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example\ufe68@evil.example/flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example\ufe68@evil.example/../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../flag",
+            "error": null
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example\ufe68@evil.example/../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../flag",
+            "error": null
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example\ufe68@evil.example/../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../../flag",
+            "error": null
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example\ufe68@evil.example/../../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../../../flag",
+            "error": null
+          }
+        ]
+      },
+      "php-league-uri": {
+        "supported": true,
+        "bestLevel": 0,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example\ufe68@evil.example/flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example\ufe68@evil.example/../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../flag",
+            "error": null
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example\ufe68@evil.example/../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../flag",
+            "error": null
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example\ufe68@evil.example/../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../../flag",
+            "error": null
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example\ufe68@evil.example/../../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../../../flag",
+            "error": null
+          }
+        ]
+      },
+      "swift-urlcomponents": {
+        "supported": false,
+        "bestLevel": null,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example\ufe68@evil.example/flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "URLComponents could not parse input"
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example\ufe68@evil.example/../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "URLComponents could not parse input"
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example\ufe68@evil.example/../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "URLComponents could not parse input"
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example\ufe68@evil.example/../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "URLComponents could not parse input"
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example\ufe68@evil.example/../../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "URLComponents could not parse input"
+          }
+        ]
+      },
+      "python-yarl": {
+        "supported": true,
+        "bestLevel": 0,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example\ufe68@evil.example/flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example\ufe68@evil.example/../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example\ufe68@evil.example/../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example\ufe68@evil.example/../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example\ufe68@evil.example/../../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          }
+        ]
+      },
+      "perl-uri": {
+        "supported": true,
+        "bestLevel": 0,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example\ufe68@evil.example/flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example\ufe68@evil.example/../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../flag",
+            "error": null
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example\ufe68@evil.example/../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../flag",
+            "error": null
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example\ufe68@evil.example/../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../../flag",
+            "error": null
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example\ufe68@evil.example/../../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../../../flag",
+            "error": null
+          }
+        ]
+      },
+      "lua-neturl": {
+        "supported": true,
+        "bestLevel": 0,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example\ufe68@evil.example/flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example\ufe68@evil.example/../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../flag",
+            "error": null
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example\ufe68@evil.example/../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../flag",
+            "error": null
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example\ufe68@evil.example/../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../../flag",
+            "error": null
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example\ufe68@evil.example/../../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../../../flag",
+            "error": null
+          }
+        ]
+      },
+      "node-whatwg": {
+        "supported": true,
+        "bestLevel": 0,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example\ufe68@evil.example/flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example\ufe68@evil.example/../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example\ufe68@evil.example/../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example\ufe68@evil.example/../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example\ufe68@evil.example/../../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          }
+        ]
+      },
+      "node-legacy": {
+        "supported": true,
+        "bestLevel": 0,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example\ufe68@evil.example/flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example\ufe68@evil.example/../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../flag",
+            "error": null
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example\ufe68@evil.example/../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../flag",
+            "error": null
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example\ufe68@evil.example/../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../../flag",
+            "error": null
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example\ufe68@evil.example/../../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../../../flag",
+            "error": null
+          }
+        ]
+      },
+      "bun-url": {
+        "supported": true,
+        "bestLevel": 0,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example\ufe68@evil.example/flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example\ufe68@evil.example/../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example\ufe68@evil.example/../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example\ufe68@evil.example/../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example\ufe68@evil.example/../../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          }
+        ]
+      },
+      "python-furl": {
+        "supported": true,
+        "bestLevel": 0,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example\ufe68@evil.example/flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example\ufe68@evil.example/../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../flag",
+            "error": null
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example\ufe68@evil.example/../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../flag",
+            "error": null
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example\ufe68@evil.example/../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../../flag",
+            "error": null
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example\ufe68@evil.example/../../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../../../flag",
+            "error": null
+          }
+        ]
+      },
+      "java-url": {
+        "supported": true,
+        "bestLevel": 0,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example\ufe68@evil.example/flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example\ufe68@evil.example/../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../flag",
+            "error": null
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example\ufe68@evil.example/../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../flag",
+            "error": null
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example\ufe68@evil.example/../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../../flag",
+            "error": null
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example\ufe68@evil.example/../../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../../../flag",
+            "error": null
+          }
+        ]
+      },
+      "python-rfc3986": {
+        "supported": true,
+        "bestLevel": 0,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example\ufe68@evil.example/flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example\ufe68@evil.example/../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../flag",
+            "error": null
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example\ufe68@evil.example/../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../flag",
+            "error": null
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example\ufe68@evil.example/../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../../flag",
+            "error": null
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example\ufe68@evil.example/../../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../../../flag",
+            "error": null
+          }
+        ]
+      },
+      "ruby-uri": {
+        "supported": false,
+        "bestLevel": null,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example\ufe68@evil.example/flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "URI must be ascii only \"http://expected.example\\uFE68@evil.example/flag\""
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example\ufe68@evil.example/../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "URI must be ascii only \"http://expected.example\\uFE68@evil.example/../flag\""
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example\ufe68@evil.example/../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "URI must be ascii only \"http://expected.example\\uFE68@evil.example/../../flag\""
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example\ufe68@evil.example/../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "URI must be ascii only \"http://expected.example\\uFE68@evil.example/../../../flag\""
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example\ufe68@evil.example/../../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "URI must be ascii only \"http://expected.example\\uFE68@evil.example/../../../../flag\""
+          }
+        ]
+      },
+      "dotnet-uri": {
+        "supported": true,
+        "bestLevel": 0,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example\ufe68@evil.example/flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example\ufe68@evil.example/../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example\ufe68@evil.example/../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example\ufe68@evil.example/../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example\ufe68@evil.example/../../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          }
+        ]
+      },
+      "android-uri": {
+        "supported": true,
+        "bestLevel": 0,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example\ufe68@evil.example/flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example\ufe68@evil.example/../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../flag",
+            "error": null
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example\ufe68@evil.example/../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../flag",
+            "error": null
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example\ufe68@evil.example/../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../../flag",
+            "error": null
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example\ufe68@evil.example/../../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../../../flag",
+            "error": null
+          }
+        ]
+      },
+      "spring-uricomponents": {
+        "supported": true,
+        "bestLevel": 0,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example\ufe68@evil.example/flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example\ufe68@evil.example/../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../flag",
+            "error": null
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example\ufe68@evil.example/../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../flag",
+            "error": null
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example\ufe68@evil.example/../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../../flag",
+            "error": null
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example\ufe68@evil.example/../../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../../../flag",
+            "error": null
+          }
+        ]
+      },
+      "apache-httpclient-uri": {
+        "supported": true,
+        "bestLevel": 0,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example\ufe68@evil.example/flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example\ufe68@evil.example/../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../flag",
+            "error": null
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example\ufe68@evil.example/../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../flag",
+            "error": null
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example\ufe68@evil.example/../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../../flag",
+            "error": null
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example\ufe68@evil.example/../../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../../../flag",
+            "error": null
+          }
+        ]
+      },
+      "python-urllib3": {
+        "supported": true,
+        "bestLevel": 0,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example\ufe68@evil.example/flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example\ufe68@evil.example/../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example\ufe68@evil.example/../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example\ufe68@evil.example/../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example\ufe68@evil.example/../../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          }
+        ]
+      },
+      "dotnet-flurl": {
+        "supported": false,
+        "bestLevel": null,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example\ufe68@evil.example/flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "flag",
+            "error": null
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example\ufe68@evil.example/../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "flag",
+            "error": null
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example\ufe68@evil.example/../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "flag",
+            "error": null
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example\ufe68@evil.example/../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "flag",
+            "error": null
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example\ufe68@evil.example/../../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "flag",
+            "error": null
+          }
+        ]
+      },
+      "ruby-addressable": {
+        "supported": true,
+        "bestLevel": 0,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example\ufe68@evil.example/flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example\ufe68@evil.example/../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../flag",
+            "error": null
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example\ufe68@evil.example/../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../flag",
+            "error": null
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example\ufe68@evil.example/../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../../flag",
+            "error": null
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example\ufe68@evil.example/../../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../../../flag",
+            "error": null
+          }
+        ]
+      },
+      "okhttp-httpurl": {
+        "supported": true,
+        "bestLevel": 0,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example\ufe68@evil.example/flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example\ufe68@evil.example/../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example\ufe68@evil.example/../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example\ufe68@evil.example/../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example\ufe68@evil.example/../../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          }
+        ]
+      },
+      "python-urllib": {
+        "supported": true,
+        "bestLevel": 0,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example\ufe68@evil.example/flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example\ufe68@evil.example/../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../flag",
+            "error": null
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example\ufe68@evil.example/../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../flag",
+            "error": null
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example\ufe68@evil.example/../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../../flag",
+            "error": null
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example\ufe68@evil.example/../../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../../../flag",
+            "error": null
+          }
+        ]
+      },
+      "go-fasthttp": {
+        "supported": true,
+        "bestLevel": 0,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example\ufe68@evil.example/flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example\ufe68@evil.example/../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example\ufe68@evil.example/../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example\ufe68@evil.example/../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example\ufe68@evil.example/../../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          }
+        ]
+      },
+      "go-parserequesturi": {
+        "supported": false,
+        "bestLevel": null,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example\ufe68@evil.example/flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "parse \"http://expected.example\ufe68@evil.example/flag\": net/url: invalid userinfo"
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example\ufe68@evil.example/../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "parse \"http://expected.example\ufe68@evil.example/../flag\": net/url: invalid userinfo"
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example\ufe68@evil.example/../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "parse \"http://expected.example\ufe68@evil.example/../../flag\": net/url: invalid userinfo"
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example\ufe68@evil.example/../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "parse \"http://expected.example\ufe68@evil.example/../../../flag\": net/url: invalid userinfo"
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example\ufe68@evil.example/../../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "parse \"http://expected.example\ufe68@evil.example/../../../../flag\": net/url: invalid userinfo"
+          }
+        ]
+      },
+      "glib-guri": {
+        "supported": true,
+        "bestLevel": 0,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example\ufe68@evil.example/flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example\ufe68@evil.example/../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example\ufe68@evil.example/../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example\ufe68@evil.example/../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example\ufe68@evil.example/../../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          }
+        ]
+      },
+      "zig-uri": {
+        "supported": true,
+        "bestLevel": 0,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example\ufe68@evil.example/flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example\ufe68@evil.example/../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../flag",
+            "error": null
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example\ufe68@evil.example/../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../flag",
+            "error": null
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example\ufe68@evil.example/../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../../flag",
+            "error": null
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example\ufe68@evil.example/../../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../../../flag",
+            "error": null
+          }
+        ]
+      },
+      "httpx-url": {
+        "supported": true,
+        "bestLevel": 0,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example\ufe68@evil.example/flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example\ufe68@evil.example/../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example\ufe68@evil.example/../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example\ufe68@evil.example/../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example\ufe68@evil.example/../../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          }
+        ]
+      },
+      "ktor-url": {
+        "supported": true,
+        "bestLevel": 0,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example\ufe68@evil.example/flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example\ufe68@evil.example/../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../flag",
+            "error": null
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example\ufe68@evil.example/../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../flag",
+            "error": null
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example\ufe68@evil.example/../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../../flag",
+            "error": null
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example\ufe68@evil.example/../../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../../../flag",
+            "error": null
+          }
+        ]
+      },
+      "wget-cli": {
+        "supported": true,
+        "bestLevel": 0,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example\ufe68@evil.example/flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example\ufe68@evil.example/../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example\ufe68@evil.example/../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example\ufe68@evil.example/../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example\ufe68@evil.example/../../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          }
+        ]
+      },
+      "elixir-uri": {
+        "supported": true,
+        "bestLevel": 0,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example\ufe68@evil.example/flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example\ufe68@evil.example/../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../flag",
+            "error": null
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example\ufe68@evil.example/../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../flag",
+            "error": null
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example\ufe68@evil.example/../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../../flag",
+            "error": null
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example\ufe68@evil.example/../../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../../../flag",
             "error": null
           }
         ]
