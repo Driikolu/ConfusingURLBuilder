@@ -1368,6 +1368,13 @@
       "family": "unicode",
       "description": "The small form reverse solidus look-alike (U+FE68) inserted before a real @. Unlike a real backslash, it's inert literal content for almost every parser tested (29/37) rather than an authority terminator.",
       "template": "{S}://{A}{AP}﹨@{T}{TP}/{C}{P}"
+    },
+    {
+      "id": "double-port-on-target",
+      "name": "Two port-like segments on target",
+      "family": "userinfo",
+      "description": "The real target host followed by two consecutive ':digits' segments. Same narrow support set as double-colon-port-on-target (python-urllib, elixir-uri) via a differently-shaped payload.",
+      "template": "{S}://{A}{AP}@{T}{TP}:80:90/{C}{P}"
     }
   ]
 }

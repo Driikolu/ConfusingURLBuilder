@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-17T12:15:58.560644+00:00",
+  "generatedAt": "2026-09-17T17:19:46.678635+00:00",
   "probe": {
     "scheme": "http",
     "allowedHost": "expected.example",
@@ -329023,6 +329023,1710 @@
           {
             "level": 4,
             "payload": "http://expected.example\ufe68@evil.example/../../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../../../flag",
+            "error": null
+          }
+        ]
+      }
+    },
+    "double-port-on-target": {
+      "php-parseurl": {
+        "supported": false,
+        "bestLevel": null,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example@evil.example:80:90/flag",
+            "ok": true,
+            "host": "evil.example:80",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example@evil.example:80:90/../flag",
+            "ok": true,
+            "host": "evil.example:80",
+            "path": "/../flag",
+            "error": null
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example@evil.example:80:90/../../flag",
+            "ok": true,
+            "host": "evil.example:80",
+            "path": "/../../flag",
+            "error": null
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example@evil.example:80:90/../../../flag",
+            "ok": true,
+            "host": "evil.example:80",
+            "path": "/../../../flag",
+            "error": null
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example@evil.example:80:90/../../../../flag",
+            "ok": true,
+            "host": "evil.example:80",
+            "path": "/../../../../flag",
+            "error": null
+          }
+        ]
+      },
+      "go-neturl": {
+        "supported": false,
+        "bestLevel": null,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example@evil.example:80:90/flag",
+            "ok": true,
+            "host": "evil.example:80",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example@evil.example:80:90/../flag",
+            "ok": true,
+            "host": "evil.example:80",
+            "path": "/../flag",
+            "error": null
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example@evil.example:80:90/../../flag",
+            "ok": true,
+            "host": "evil.example:80",
+            "path": "/../../flag",
+            "error": null
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example@evil.example:80:90/../../../flag",
+            "ok": true,
+            "host": "evil.example:80",
+            "path": "/../../../flag",
+            "error": null
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example@evil.example:80:90/../../../../flag",
+            "ok": true,
+            "host": "evil.example:80",
+            "path": "/../../../../flag",
+            "error": null
+          }
+        ]
+      },
+      "perl-uri": {
+        "supported": false,
+        "bestLevel": null,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example@evil.example:80:90/flag",
+            "ok": true,
+            "host": "evil.example:80",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example@evil.example:80:90/../flag",
+            "ok": true,
+            "host": "evil.example:80",
+            "path": "/../flag",
+            "error": null
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example@evil.example:80:90/../../flag",
+            "ok": true,
+            "host": "evil.example:80",
+            "path": "/../../flag",
+            "error": null
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example@evil.example:80:90/../../../flag",
+            "ok": true,
+            "host": "evil.example:80",
+            "path": "/../../../flag",
+            "error": null
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example@evil.example:80:90/../../../../flag",
+            "ok": true,
+            "host": "evil.example:80",
+            "path": "/../../../../flag",
+            "error": null
+          }
+        ]
+      },
+      "uriparser-c": {
+        "supported": false,
+        "bestLevel": null,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example@evil.example:80:90/flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "syntax error at offset 39 (near ':')"
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example@evil.example:80:90/../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "syntax error at offset 39 (near ':')"
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example@evil.example:80:90/../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "syntax error at offset 39 (near ':')"
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example@evil.example:80:90/../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "syntax error at offset 39 (near ':')"
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example@evil.example:80:90/../../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "syntax error at offset 39 (near ':')"
+          }
+        ]
+      },
+      "cpp-boost-url": {
+        "supported": false,
+        "bestLevel": null,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example@evil.example:80:90/flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": ":90/flag",
+            "error": null
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example@evil.example:80:90/../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": ":90/../flag",
+            "error": null
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example@evil.example:80:90/../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": ":90/../../flag",
+            "error": null
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example@evil.example:80:90/../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": ":90/../../../flag",
+            "error": null
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example@evil.example:80:90/../../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": ":90/../../../../flag",
+            "error": null
+          }
+        ]
+      },
+      "bun-url": {
+        "supported": false,
+        "bestLevel": null,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example@evil.example:80:90/flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Invalid URL"
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example@evil.example:80:90/../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Invalid URL"
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example@evil.example:80:90/../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Invalid URL"
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example@evil.example:80:90/../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Invalid URL"
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example@evil.example:80:90/../../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Invalid URL"
+          }
+        ]
+      },
+      "swift-urlcomponents": {
+        "supported": false,
+        "bestLevel": null,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example@evil.example:80:90/flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "URLComponents could not parse input"
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example@evil.example:80:90/../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "URLComponents could not parse input"
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example@evil.example:80:90/../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "URLComponents could not parse input"
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example@evil.example:80:90/../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "URLComponents could not parse input"
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example@evil.example:80:90/../../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "URLComponents could not parse input"
+          }
+        ]
+      },
+      "libcurl": {
+        "supported": false,
+        "bestLevel": null,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example@evil.example:80:90/flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Port number was not a decimal number between 0 and 65535"
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example@evil.example:80:90/../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Port number was not a decimal number between 0 and 65535"
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example@evil.example:80:90/../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Port number was not a decimal number between 0 and 65535"
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example@evil.example:80:90/../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Port number was not a decimal number between 0 and 65535"
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example@evil.example:80:90/../../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Port number was not a decimal number between 0 and 65535"
+          }
+        ]
+      },
+      "node-whatwg": {
+        "supported": false,
+        "bestLevel": null,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example@evil.example:80:90/flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Invalid URL"
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example@evil.example:80:90/../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Invalid URL"
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example@evil.example:80:90/../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Invalid URL"
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example@evil.example:80:90/../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Invalid URL"
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example@evil.example:80:90/../../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Invalid URL"
+          }
+        ]
+      },
+      "rust-url": {
+        "supported": false,
+        "bestLevel": null,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example@evil.example:80:90/flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "invalid port number"
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example@evil.example:80:90/../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "invalid port number"
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example@evil.example:80:90/../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "invalid port number"
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example@evil.example:80:90/../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "invalid port number"
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example@evil.example:80:90/../../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "invalid port number"
+          }
+        ]
+      },
+      "python-yarl": {
+        "supported": false,
+        "bestLevel": null,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example@evil.example:80:90/flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Invalid URL: port can't be converted to integer"
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example@evil.example:80:90/../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Invalid URL: port can't be converted to integer"
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example@evil.example:80:90/../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Invalid URL: port can't be converted to integer"
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example@evil.example:80:90/../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Invalid URL: port can't be converted to integer"
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example@evil.example:80:90/../../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Invalid URL: port can't be converted to integer"
+          }
+        ]
+      },
+      "lua-neturl": {
+        "supported": false,
+        "bestLevel": null,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example@evil.example:80:90/flag",
+            "ok": true,
+            "host": null,
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example@evil.example:80:90/../flag",
+            "ok": true,
+            "host": null,
+            "path": "/../flag",
+            "error": null
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example@evil.example:80:90/../../flag",
+            "ok": true,
+            "host": null,
+            "path": "/../../flag",
+            "error": null
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example@evil.example:80:90/../../../flag",
+            "ok": true,
+            "host": null,
+            "path": "/../../../flag",
+            "error": null
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example@evil.example:80:90/../../../../flag",
+            "ok": true,
+            "host": null,
+            "path": "/../../../../flag",
+            "error": null
+          }
+        ]
+      },
+      "rust-http-uri": {
+        "supported": false,
+        "bestLevel": null,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example@evil.example:80:90/flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "invalid authority"
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example@evil.example:80:90/../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "invalid authority"
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example@evil.example:80:90/../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "invalid authority"
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example@evil.example:80:90/../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "invalid authority"
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example@evil.example:80:90/../../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "invalid authority"
+          }
+        ]
+      },
+      "java-uri": {
+        "supported": false,
+        "bestLevel": null,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example@evil.example:80:90/flag",
+            "ok": true,
+            "host": null,
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example@evil.example:80:90/../flag",
+            "ok": true,
+            "host": null,
+            "path": "/../flag",
+            "error": null
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example@evil.example:80:90/../../flag",
+            "ok": true,
+            "host": null,
+            "path": "/../../flag",
+            "error": null
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example@evil.example:80:90/../../../flag",
+            "ok": true,
+            "host": null,
+            "path": "/../../../flag",
+            "error": null
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example@evil.example:80:90/../../../../flag",
+            "ok": true,
+            "host": null,
+            "path": "/../../../../flag",
+            "error": null
+          }
+        ]
+      },
+      "python-furl": {
+        "supported": false,
+        "bestLevel": null,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example@evil.example:80:90/flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Invalid host 'evil.example:80'. Host strings must have at least one non-period character, can't contain any of '!@#$%^&'\"*()+=:;/', and can't have adjacent periods."
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example@evil.example:80:90/../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Invalid host 'evil.example:80'. Host strings must have at least one non-period character, can't contain any of '!@#$%^&'\"*()+=:;/', and can't have adjacent periods."
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example@evil.example:80:90/../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Invalid host 'evil.example:80'. Host strings must have at least one non-period character, can't contain any of '!@#$%^&'\"*()+=:;/', and can't have adjacent periods."
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example@evil.example:80:90/../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Invalid host 'evil.example:80'. Host strings must have at least one non-period character, can't contain any of '!@#$%^&'\"*()+=:;/', and can't have adjacent periods."
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example@evil.example:80:90/../../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Invalid host 'evil.example:80'. Host strings must have at least one non-period character, can't contain any of '!@#$%^&'\"*()+=:;/', and can't have adjacent periods."
+          }
+        ]
+      },
+      "node-legacy": {
+        "supported": false,
+        "bestLevel": null,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example@evil.example:80:90/flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/:80/flag",
+            "error": null
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example@evil.example:80:90/../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/:80/../flag",
+            "error": null
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example@evil.example:80:90/../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/:80/../../flag",
+            "error": null
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example@evil.example:80:90/../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/:80/../../../flag",
+            "error": null
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example@evil.example:80:90/../../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/:80/../../../../flag",
+            "error": null
+          }
+        ]
+      },
+      "php-league-uri": {
+        "supported": false,
+        "bestLevel": null,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example@evil.example:80:90/flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "League\\Uri\\Exceptions\\SyntaxError: The port `80:90` is invalid"
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example@evil.example:80:90/../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "League\\Uri\\Exceptions\\SyntaxError: The port `80:90` is invalid"
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example@evil.example:80:90/../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "League\\Uri\\Exceptions\\SyntaxError: The port `80:90` is invalid"
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example@evil.example:80:90/../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "League\\Uri\\Exceptions\\SyntaxError: The port `80:90` is invalid"
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example@evil.example:80:90/../../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "League\\Uri\\Exceptions\\SyntaxError: The port `80:90` is invalid"
+          }
+        ]
+      },
+      "java-url": {
+        "supported": false,
+        "bestLevel": null,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example@evil.example:80:90/flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Error at index 2 in: \"80:90\""
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example@evil.example:80:90/../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Error at index 2 in: \"80:90\""
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example@evil.example:80:90/../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Error at index 2 in: \"80:90\""
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example@evil.example:80:90/../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Error at index 2 in: \"80:90\""
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example@evil.example:80:90/../../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Error at index 2 in: \"80:90\""
+          }
+        ]
+      },
+      "apache-httpclient-uri": {
+        "supported": false,
+        "bestLevel": null,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example@evil.example:80:90/flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "http/https URI cannot have an empty host identifier: http"
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example@evil.example:80:90/../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "http/https URI cannot have an empty host identifier: http"
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example@evil.example:80:90/../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "http/https URI cannot have an empty host identifier: http"
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example@evil.example:80:90/../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "http/https URI cannot have an empty host identifier: http"
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example@evil.example:80:90/../../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "http/https URI cannot have an empty host identifier: http"
+          }
+        ]
+      },
+      "python-rfc3986": {
+        "supported": false,
+        "bestLevel": null,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example@evil.example:80:90/flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "The port (\"80:90\") is not valid."
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example@evil.example:80:90/../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "The port (\"80:90\") is not valid."
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example@evil.example:80:90/../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "The port (\"80:90\") is not valid."
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example@evil.example:80:90/../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "The port (\"80:90\") is not valid."
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example@evil.example:80:90/../../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "The port (\"80:90\") is not valid."
+          }
+        ]
+      },
+      "ruby-uri": {
+        "supported": false,
+        "bestLevel": null,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example@evil.example:80:90/flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "bad URI(is not URI?): \"http://expected.example@evil.example:80:90/flag\""
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example@evil.example:80:90/../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "bad URI(is not URI?): \"http://expected.example@evil.example:80:90/../flag\""
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example@evil.example:80:90/../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "bad URI(is not URI?): \"http://expected.example@evil.example:80:90/../../flag\""
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example@evil.example:80:90/../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "bad URI(is not URI?): \"http://expected.example@evil.example:80:90/../../../flag\""
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example@evil.example:80:90/../../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "bad URI(is not URI?): \"http://expected.example@evil.example:80:90/../../../../flag\""
+          }
+        ]
+      },
+      "spring-uricomponents": {
+        "supported": false,
+        "bestLevel": null,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example@evil.example:80:90/flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Exception in thread \"main\" java.lang.IllegalStateException: The port must be an integer: 80:90\n\tat org.springframework.web.util.HierarchicalUriComponents.getPort(HierarchicalUriComponents.java:200)\n\tat Parse.main(Parse.java:36)"
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example@evil.example:80:90/../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Exception in thread \"main\" java.lang.IllegalStateException: The port must be an integer: 80:90\n\tat org.springframework.web.util.HierarchicalUriComponents.getPort(HierarchicalUriComponents.java:200)\n\tat Parse.main(Parse.java:36)"
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example@evil.example:80:90/../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Exception in thread \"main\" java.lang.IllegalStateException: The port must be an integer: 80:90\n\tat org.springframework.web.util.HierarchicalUriComponents.getPort(HierarchicalUriComponents.java:200)\n\tat Parse.main(Parse.java:36)"
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example@evil.example:80:90/../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Exception in thread \"main\" java.lang.IllegalStateException: The port must be an integer: 80:90\n\tat org.springframework.web.util.HierarchicalUriComponents.getPort(HierarchicalUriComponents.java:200)\n\tat Parse.main(Parse.java:36)"
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example@evil.example:80:90/../../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Exception in thread \"main\" java.lang.IllegalStateException: The port must be an integer: 80:90\n\tat org.springframework.web.util.HierarchicalUriComponents.getPort(HierarchicalUriComponents.java:200)\n\tat Parse.main(Parse.java:36)"
+          }
+        ]
+      },
+      "ruby-addressable": {
+        "supported": false,
+        "bestLevel": null,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example@evil.example:80:90/flag",
+            "ok": true,
+            "host": "evil.example:80",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example@evil.example:80:90/../flag",
+            "ok": true,
+            "host": "evil.example:80",
+            "path": "/../flag",
+            "error": null
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example@evil.example:80:90/../../flag",
+            "ok": true,
+            "host": "evil.example:80",
+            "path": "/../../flag",
+            "error": null
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example@evil.example:80:90/../../../flag",
+            "ok": true,
+            "host": "evil.example:80",
+            "path": "/../../../flag",
+            "error": null
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example@evil.example:80:90/../../../../flag",
+            "ok": true,
+            "host": "evil.example:80",
+            "path": "/../../../../flag",
+            "error": null
+          }
+        ]
+      },
+      "python-urllib3": {
+        "supported": false,
+        "bestLevel": null,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example@evil.example:80:90/flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Failed to parse: http://expected.example@evil.example:80:90/flag"
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example@evil.example:80:90/../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Failed to parse: http://expected.example@evil.example:80:90/../flag"
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example@evil.example:80:90/../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Failed to parse: http://expected.example@evil.example:80:90/../../flag"
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example@evil.example:80:90/../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Failed to parse: http://expected.example@evil.example:80:90/../../../flag"
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example@evil.example:80:90/../../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Failed to parse: http://expected.example@evil.example:80:90/../../../../flag"
+          }
+        ]
+      },
+      "android-uri": {
+        "supported": false,
+        "bestLevel": null,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example@evil.example:80:90/flag",
+            "ok": true,
+            "host": "evil.example:80",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example@evil.example:80:90/../flag",
+            "ok": true,
+            "host": "evil.example:80",
+            "path": "/../flag",
+            "error": null
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example@evil.example:80:90/../../flag",
+            "ok": true,
+            "host": "evil.example:80",
+            "path": "/../../flag",
+            "error": null
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example@evil.example:80:90/../../../flag",
+            "ok": true,
+            "host": "evil.example:80",
+            "path": "/../../../flag",
+            "error": null
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example@evil.example:80:90/../../../../flag",
+            "ok": true,
+            "host": "evil.example:80",
+            "path": "/../../../../flag",
+            "error": null
+          }
+        ]
+      },
+      "dotnet-flurl": {
+        "supported": false,
+        "bestLevel": null,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example@evil.example:80:90/flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Invalid URI: Invalid port specified."
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example@evil.example:80:90/../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Invalid URI: Invalid port specified."
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example@evil.example:80:90/../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Invalid URI: Invalid port specified."
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example@evil.example:80:90/../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Invalid URI: Invalid port specified."
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example@evil.example:80:90/../../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Invalid URI: Invalid port specified."
+          }
+        ]
+      },
+      "dotnet-uri": {
+        "supported": false,
+        "bestLevel": null,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example@evil.example:80:90/flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Invalid URI: Invalid port specified."
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example@evil.example:80:90/../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Invalid URI: Invalid port specified."
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example@evil.example:80:90/../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Invalid URI: Invalid port specified."
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example@evil.example:80:90/../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Invalid URI: Invalid port specified."
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example@evil.example:80:90/../../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Invalid URI: Invalid port specified."
+          }
+        ]
+      },
+      "okhttp-httpurl": {
+        "supported": false,
+        "bestLevel": null,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example@evil.example:80:90/flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Invalid URL port: \"80:90\""
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example@evil.example:80:90/../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Invalid URL port: \"80:90\""
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example@evil.example:80:90/../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Invalid URL port: \"80:90\""
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example@evil.example:80:90/../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Invalid URL port: \"80:90\""
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example@evil.example:80:90/../../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Invalid URL port: \"80:90\""
+          }
+        ]
+      },
+      "python-urllib": {
+        "supported": true,
+        "bestLevel": 0,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example@evil.example:80:90/flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example@evil.example:80:90/../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../flag",
+            "error": null
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example@evil.example:80:90/../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../flag",
+            "error": null
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example@evil.example:80:90/../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../../flag",
+            "error": null
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example@evil.example:80:90/../../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../../../flag",
+            "error": null
+          }
+        ]
+      },
+      "wget-cli": {
+        "supported": false,
+        "bestLevel": null,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example@evil.example:80:90/flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "http://expected.example@evil.example:80:90/flag: Bad port number."
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example@evil.example:80:90/../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "http://expected.example@evil.example:80:90/../flag: Bad port number."
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example@evil.example:80:90/../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "http://expected.example@evil.example:80:90/../../flag: Bad port number."
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example@evil.example:80:90/../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "http://expected.example@evil.example:80:90/../../../flag: Bad port number."
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example@evil.example:80:90/../../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "http://expected.example@evil.example:80:90/../../../../flag: Bad port number."
+          }
+        ]
+      },
+      "go-fasthttp": {
+        "supported": false,
+        "bestLevel": null,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example@evil.example:80:90/flag",
+            "ok": true,
+            "host": "evil.example:80:90",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example@evil.example:80:90/../flag",
+            "ok": true,
+            "host": "evil.example:80:90",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example@evil.example:80:90/../../flag",
+            "ok": true,
+            "host": "evil.example:80:90",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example@evil.example:80:90/../../../flag",
+            "ok": true,
+            "host": "evil.example:80:90",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example@evil.example:80:90/../../../../flag",
+            "ok": true,
+            "host": "evil.example:80:90",
+            "path": "/flag",
+            "error": null
+          }
+        ]
+      },
+      "go-parserequesturi": {
+        "supported": false,
+        "bestLevel": null,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example@evil.example:80:90/flag",
+            "ok": true,
+            "host": "evil.example:80",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example@evil.example:80:90/../flag",
+            "ok": true,
+            "host": "evil.example:80",
+            "path": "/../flag",
+            "error": null
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example@evil.example:80:90/../../flag",
+            "ok": true,
+            "host": "evil.example:80",
+            "path": "/../../flag",
+            "error": null
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example@evil.example:80:90/../../../flag",
+            "ok": true,
+            "host": "evil.example:80",
+            "path": "/../../../flag",
+            "error": null
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example@evil.example:80:90/../../../../flag",
+            "ok": true,
+            "host": "evil.example:80",
+            "path": "/../../../../flag",
+            "error": null
+          }
+        ]
+      },
+      "glib-guri": {
+        "supported": false,
+        "bestLevel": null,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example@evil.example:80:90/flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Could not parse port \u201880:90\u2019 in URI"
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example@evil.example:80:90/../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Could not parse port \u201880:90\u2019 in URI"
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example@evil.example:80:90/../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Could not parse port \u201880:90\u2019 in URI"
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example@evil.example:80:90/../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Could not parse port \u201880:90\u2019 in URI"
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example@evil.example:80:90/../../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Could not parse port \u201880:90\u2019 in URI"
+          }
+        ]
+      },
+      "zig-uri": {
+        "supported": false,
+        "bestLevel": null,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example@evil.example:80:90/flag",
+            "ok": true,
+            "host": "evil.example:80",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example@evil.example:80:90/../flag",
+            "ok": true,
+            "host": "evil.example:80",
+            "path": "/../flag",
+            "error": null
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example@evil.example:80:90/../../flag",
+            "ok": true,
+            "host": "evil.example:80",
+            "path": "/../../flag",
+            "error": null
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example@evil.example:80:90/../../../flag",
+            "ok": true,
+            "host": "evil.example:80",
+            "path": "/../../../flag",
+            "error": null
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example@evil.example:80:90/../../../../flag",
+            "ok": true,
+            "host": "evil.example:80",
+            "path": "/../../../../flag",
+            "error": null
+          }
+        ]
+      },
+      "httpx-url": {
+        "supported": false,
+        "bestLevel": null,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example@evil.example:80:90/flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Invalid port: '80:90'"
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example@evil.example:80:90/../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Invalid port: '80:90'"
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example@evil.example:80:90/../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Invalid port: '80:90'"
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example@evil.example:80:90/../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Invalid port: '80:90'"
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example@evil.example:80:90/../../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "Invalid port: '80:90'"
+          }
+        ]
+      },
+      "ktor-url": {
+        "supported": false,
+        "bestLevel": null,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example@evil.example:80:90/flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "URLParserException: Fail to parse url: http://expected.example@evil.example:80:90/flag"
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example@evil.example:80:90/../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "URLParserException: Fail to parse url: http://expected.example@evil.example:80:90/../flag"
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example@evil.example:80:90/../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "URLParserException: Fail to parse url: http://expected.example@evil.example:80:90/../../flag"
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example@evil.example:80:90/../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "URLParserException: Fail to parse url: http://expected.example@evil.example:80:90/../../../flag"
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example@evil.example:80:90/../../../../flag",
+            "ok": false,
+            "host": null,
+            "path": null,
+            "error": "URLParserException: Fail to parse url: http://expected.example@evil.example:80:90/../../../../flag"
+          }
+        ]
+      },
+      "elixir-uri": {
+        "supported": true,
+        "bestLevel": 0,
+        "levels": [
+          {
+            "level": 0,
+            "payload": "http://expected.example@evil.example:80:90/flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/flag",
+            "error": null
+          },
+          {
+            "level": 1,
+            "payload": "http://expected.example@evil.example:80:90/../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../flag",
+            "error": null
+          },
+          {
+            "level": 2,
+            "payload": "http://expected.example@evil.example:80:90/../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../flag",
+            "error": null
+          },
+          {
+            "level": 3,
+            "payload": "http://expected.example@evil.example:80:90/../../../flag",
+            "ok": true,
+            "host": "evil.example",
+            "path": "/../../../flag",
+            "error": null
+          },
+          {
+            "level": 4,
+            "payload": "http://expected.example@evil.example:80:90/../../../../flag",
             "ok": true,
             "host": "evil.example",
             "path": "/../../../../flag",
