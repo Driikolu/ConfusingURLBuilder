@@ -25,7 +25,7 @@ function ecosystemOf(name) {
   if (name.startsWith("dotnet-")) return ".NET";
   if (name.startsWith("rust-")) return "Rust";
   if (name === "perl-uri") return "Perl";
-  if (name === "elixir-uri") return "Elixir";
+  if (name === "elixir-uri" || name === "erlang-uri-string") return "Erlang / Elixir";
   if (name === "lua-neturl") return "Lua";
   if (name === "swift-urlcomponents" || name === "foundation-nsurl") return "Swift";
   if (name === "cpp-boost-url" || name === "uriparser-c" || name === "glib-guri" || name === "apache-apr") return "C / C++";
@@ -33,6 +33,10 @@ function ecosystemOf(name) {
   if (name === "zig-uri") return "Zig";
   if (name === "dart-uri") return "Dart";
   if (name === "pekko-http-uri") return "Scala";
+  if (name === "haskell-network-uri") return "Haskell";
+  if (name === "crystal-uri") return "Crystal";
+  if (name === "nim-uri") return "Nim";
+  if (name.startsWith("browser-")) return "Browsers";
   return "Other";
 }
 
@@ -263,7 +267,7 @@ function renderRow(row) {
 }
 
 // One payload per technique per *distinct* path-correction level seen for
-// any of the 32 parsers (plus level 0 as a baseline for techniques with no
+// any of the real parsers (plus level 0 as a baseline for techniques with no
 // supported parser at all) - unfiltered by bypass/verdict status. Meant for
 // blind fuzzing when the target's tech stack isn't known.
 function buildAllPayloads(inputs) {

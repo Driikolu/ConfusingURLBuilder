@@ -4,7 +4,7 @@
 
 A 100% client-side URL-parsing-confusion payload generator (SSRF /
 allowlist bypass). Unlike a static cheatsheet, every payload is checked
-against a **real** parser/library (32 languages), and the `../` path
+against **real** parsers/libraries (54 of them, browsers included), and the `../` path
 correction needed to reach exactly the desired path is computed
 automatically instead of guessed by hand.
 
